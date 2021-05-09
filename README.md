@@ -8,13 +8,9 @@
 - 📫 You could reach me via: [LinkedIn](https://www.linkedin.com/in/maksym-boytsov/), [Twitter](https://twitter.com/maksymboytsov) or [Email](mailto:maksym.boytsov@gmail.com?subject=[GitHub])
 
 <!--START_SECTION:waka-->
-![Profile Views](http://img.shields.io/badge/Profile%20Views-0-blue)
-
-![Lines of code](https://img.shields.io/badge/From%20Hello%20World%20I%27ve%20Written-17557%20lines%20of%20code-blue)
-
 **🐱 My Github Data** 
 
-> 🏆 1,734 Contributions in the Year 2021
+> 🏆 1,732 Contributions in the Year 2021
  > 
 > 📦 26.7 kB Used in Github's Storage 
  > 
