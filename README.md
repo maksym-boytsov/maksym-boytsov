@@ -14,7 +14,7 @@
 
 **🐱 My Github Data** 
 
-> 🏆 1,732 Contributions in the Year 2021
+> 🏆 1,734 Contributions in the Year 2021
  > 
 > 📦 26.7 kB Used in Github's Storage 
  > 
@@ -74,10 +74,6 @@ HTML                     1 repo              █░░░░░░░░░░�
 
 ```
 
-
-**Timeline**
-
-![Chart not found](https://raw.githubusercontent.com/maksymboytsov/maksymboytsov/main/charts/bar_graph.png) 
 
 
 <!--END_SECTION:waka-->
