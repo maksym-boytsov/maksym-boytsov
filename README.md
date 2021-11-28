@@ -1,7 +1,9 @@
 ### Hi there 👋
 #### I'm Maksym Boytsov - full-stack developer and CS student based in Warsaw, Poland.
 
-##### Passionate collaborating to open source • Bulding world-class products for startups • Familiar with lots of modern web-technologies • Big TypeScript enthusiast • Quality, security and best practices are my best friends
+##### Passionate collaborating to open source • Bulding world-class products for startups • Familiar with lots of modern web-technologies • TypeScript enthusiast • Quality, security and best practices are my best friends
+
+##### Now busy building UIs for Internet Computer's canister smart contracts
 
 - 🔭 I’m currently working on expanding my tech knowledge and achieving my key goals.
 - 📫 You could reach me via: [LinkedIn](https://www.linkedin.com/in/maksym-boytsov/), [Twitter](https://twitter.com/maksymboytsov) or [Email](mailto:maksym.boytsov@gmail.com?subject=[GitHub])
