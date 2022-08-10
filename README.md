@@ -1,5 +1,5 @@
 ### Hi there 👋
-#### I'm Maksym Boytsov - full-stack developer and CS student based in Warsaw, Poland.
+#### I'm Maksym Boytsov - Web3 Engineer based in Warsaw, Poland.
 
 ##### Passionate collaborating to open source • Bulding world-class products for startups • Familiar with lots of modern web-technologies • TypeScript enthusiast • Quality, security and best practices are my best friends
 
