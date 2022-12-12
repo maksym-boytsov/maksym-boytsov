@@ -3,6 +3,8 @@ import {
   ArrowDownIcon,
   BriefcaseIcon,
   ExclamationCircleIcon,
+  PhoneIcon,
+  PlusIcon,
   UserPlusIcon,
   WindowIcon,
 } from "@heroicons/react/24/solid";
@@ -15,7 +17,7 @@ export default function Home() {
     defaultValues: {
       email: "",
       name: "",
-      message: "Hey there!",
+      message: "",
     },
   });
   const experienceRef = useRef(null);
@@ -50,7 +52,7 @@ export default function Home() {
       <Head>
         <title>Maksym Boytsov</title>
         <meta name="description" content="Maksym Boytsov's personal website" />
-        <link rel="icon" href="/favicon.ico" />
+        {/* <link rel="icon" href="/favicon.ico" /> */}
         <link rel="canonical" href="https://maksym.page/" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
@@ -164,7 +166,28 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-20 mx-auto max-w-3xl text-center">
+            <div className="relative my-20">
+              <div
+                className="absolute inset-0 flex items-center"
+                aria-hidden="true"
+              >
+                <div className="w-full border-t border-blue-300" />
+              </div>
+              <div className="relative flex justify-center">
+                <button
+                  onClick={() =>
+                    contactRef.current.scrollIntoView({ behavior: "smooth" })
+                  }
+                  type="button"
+                  className="inline-flex items-center rounded-full bg-blue-300 px-4 py-1.5 text-sm font-medium leading-5 text-blue-700 shadow-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <PlusIcon className="h-5 w-5 mr-1" />
+                  <span>Write a Message</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
                 Experience
               </h2>
@@ -177,14 +200,14 @@ export default function Home() {
                 <div key={experience.name} className="relative">
                   <dt>
                     <BriefcaseIcon
-                      className="absolute mt-1 h-6 w-6 text-indigo-400"
+                      className="absolute mt-1 h-6 w-6 text-blue-400"
                       aria-hidden="true"
                     />
                     <p className="ml-10 text-lg font-semibold leading-8 text-gray-100">
                       {experience.company}
                     </p>
                     <WindowIcon
-                      className="absolute mt-1 h-6 w-6 text-indigo-400"
+                      className="absolute mt-1 h-6 w-6 text-blue-400"
                       aria-hidden="true"
                     />
                     <p className="ml-10 text-md font-semibold leading-8 text-gray-100">
@@ -209,14 +232,14 @@ export default function Home() {
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Trusted by companies and people
               </h2>
-              <p className="mt-3 text-xl text-indigo-200 sm:mt-4">
+              <p className="mt-3 text-xl text-blue-200 sm:mt-4">
                 By consistent flow of engineering, consulting and solving
                 problems I was able to create
               </p>
             </div>
             <dl className="mt-10 text-center sm:mx-auto sm:grid sm:max-w-3xl sm:grid-cols-3 sm:gap-8">
               <div className="mt-10 flex flex-col sm:mt-0">
-                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-indigo-200">
+                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-blue-200">
                   World-Class Products
                 </dt>
                 <dd className="order-1 text-5xl font-bold tracking-tight text-white">
@@ -224,7 +247,7 @@ export default function Home() {
                 </dd>
               </div>
               <div className="mt-10 flex flex-col sm:mt-0">
-                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-indigo-200">
+                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-blue-200">
                   Trust of partners
                 </dt>
                 <dd className="order-1 text-5xl font-bold tracking-tight text-white">
@@ -232,7 +255,7 @@ export default function Home() {
                 </dd>
               </div>
               <div className="mt-10 flex flex-col sm:mt-0">
-                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-indigo-200">
+                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-blue-200">
                   Opportunities
                 </dt>
                 <dd className="order-1 text-5xl font-bold tracking-tight text-white">
@@ -359,12 +382,12 @@ export default function Home() {
                   minLength: {
                     value: 10,
                     message:
-                      "Message must be at least 10 characters. Be more descriptive :)",
+                      "Message must be at least 10 characters - be more descriptive.",
                   },
                   maxLength: {
                     value: 1000,
                     message:
-                      "Message must be at most 1000 characters. I appreciate your enthusiasm, but I'm not that interested in your life story.",
+                      "Message must be at most 1000 characters. Drop a short note and we can talk more on email or any messenger.",
                   },
                 })}
                 id="message"
@@ -397,7 +420,7 @@ export default function Home() {
             type="submit"
             className="place-self-end inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Send
+            Send Message
           </button>
         </form>
 
