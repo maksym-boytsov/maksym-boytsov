@@ -96,8 +96,6 @@ export default function Home() {
           className="relative bg-white h-screen grid gap-5 justify-center items-center justify-items-center content-center"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-lg font-semibold text-gray-800">Qualities</h2>
-
             {keywords.map((keyword) => (
               <p
                 key={keyword.color}
@@ -108,7 +106,7 @@ export default function Home() {
             ))}
 
             <p className="mx-auto mt-5 max-w-xl text-xl text-gray-500">
-              that I value in myself and the people I work with.
+              I value in myself and the people I work with.
             </p>
           </div>
 
