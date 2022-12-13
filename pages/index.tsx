@@ -108,7 +108,7 @@ export default function Home() {
             ))}
 
             <p className="mx-auto mt-5 max-w-xl text-xl text-gray-500">
-              I value in myself and people I work with.
+              that I value in myself and the people I work with.
             </p>
           </div>
 
