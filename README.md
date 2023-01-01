@@ -1,5 +1,5 @@
 ### Hi there 👋
-#### I'm Maksym Boytsov - Software Engineer focused on Web3 technologies - currently based in Warsaw, Poland.
+#### I'm Max, Software Engineer focused on Web3 technologies - currently based in Warsaw, Poland.
 
 ##### 
 
