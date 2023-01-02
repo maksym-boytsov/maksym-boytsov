@@ -3,7 +3,6 @@ import {
   ArrowDownIcon,
   BriefcaseIcon,
   ExclamationCircleIcon,
-  PhoneIcon,
   PlusIcon,
   UserPlusIcon,
   WindowIcon,
