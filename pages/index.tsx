@@ -56,8 +56,8 @@ export default function Home() {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <main>
-        <header className="fixed z-10 backdrop-blur-sm bg-white/75 rounded-bl-md rounded-br-md left-0 right-0 py-3 mx-auto max-w-7xl px-2 sm:px-4 lg:px-6">
+      <main className="text-zinc-100">
+        <header className="fixed z-10 backdrop-blur-sm bg-zinc-900/75 rounded-bl-md rounded-br-md left-0 right-0 py-3 mx-auto max-w-7xl px-2 sm:px-4">
           <div className="flex justify-between items-center">
             <div className="grid grid-flow-col items-center">
               <div className="mr-3 flex-shrink-0">
@@ -69,18 +69,18 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-lg font-bold">Maksym Boytsov</h1>
-                <h3>🧑‍💻 Software Engineer</h3>
+                <h2>🧑‍💻 Software Engineer</h2>
               </div>
             </div>
 
-            <div className="flex justify-center space-x-6">
+            <div className="flex justify-center space-x-4">
               {social.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-300"
                 >
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
@@ -92,7 +92,7 @@ export default function Home() {
 
         <section
           id="hero"
-          className="relative bg-white h-screen grid gap-5 justify-center items-center justify-items-center content-center"
+          className="relative bg-zinc-900 h-screen grid gap-5 justify-center items-center justify-items-center content-center border-b border-zinc-700"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
             {keywords.map((keyword) => (
@@ -104,7 +104,7 @@ export default function Home() {
               </p>
             ))}
 
-            <p className="mx-auto mt-5 max-w-xl text-xl text-gray-500">
+            <p className="mx-auto mt-5 max-w-xl text-xl text-gray-400">
               I value in myself and the people I work with.
             </p>
           </div>
@@ -114,13 +114,14 @@ export default function Home() {
               contactRef.current.scrollIntoView({ behavior: "smooth" })
             }
             type="button"
-            className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-base font-medium text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
             <UserPlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             Let's Connect
           </button>
 
           <button
+            aria-label="Scroll down"
             type="button"
             onClick={() =>
               experienceRef.current.scrollIntoView({ behavior: "smooth" })
@@ -131,7 +132,7 @@ export default function Home() {
           </button>
         </section>
 
-        <section ref={experienceRef} id="experience" className="bg-zinc-900">
+        <section ref={experienceRef} id="experience" className="bg-zinc-800">
           <div className="mx-auto max-w-7xl py-20 px-6 sm:py-24 lg:px-8 lg:py-32">
             <div className="text-center">
               <h2 className="mb-10 text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
@@ -168,7 +169,7 @@ export default function Home() {
                 className="absolute inset-0 flex items-center"
                 aria-hidden="true"
               >
-                <div className="w-full border-t border-blue-300" />
+                <div className="w-full border-t border-blue-400" />
               </div>
               <div className="relative flex justify-center">
                 <button
@@ -176,7 +177,7 @@ export default function Home() {
                     contactRef.current.scrollIntoView({ behavior: "smooth" })
                   }
                   type="button"
-                  className="inline-flex items-center rounded-full bg-blue-300 px-4 py-1.5 text-sm font-medium leading-5 text-blue-700 shadow-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="inline-flex items-center rounded-full bg-blue-400 px-4 py-1.5 text-sm font-medium leading-5 text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 >
                   <PlusIcon className="h-5 w-5 mr-1" />
                   <span>Write a Message</span>
@@ -192,10 +193,10 @@ export default function Home() {
                 Majority of my experience in the field of software development.
               </p>
             </div>
-            <dl className="mt-20 grid grid-cols-1 gap-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
+            <div className="mt-20 grid grid-cols-1 gap-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
               {experiences.map((experience) => (
                 <div key={experience.name} className="relative">
-                  <dt>
+                  <div>
                     <BriefcaseIcon
                       className="absolute mt-1 h-6 w-6 text-blue-400"
                       aria-hidden="true"
@@ -210,20 +211,20 @@ export default function Home() {
                     <p className="ml-10 text-md font-semibold leading-8 text-gray-100">
                       {experience.name}
                     </p>
-                  </dt>
-                  <dd className="mt-2 ml-10 text-base leading-7 text-gray-400">
+                  </div>
+                  <div className="mt-2 ml-10 text-base leading-7 text-gray-400">
                     {experience.description}
-                  </dd>
+                  </div>
                   <p className="mt-2 ml-10 text-gray-200 text-sm">
                     {experience.start} - {experience.end}
                   </p>
                 </div>
               ))}
-            </dl>
+            </div>
           </div>
         </section>
 
-        <section id="stats" className="bg-blue-800">
+        <section id="stats" className="bg-blue-900">
           <div className="mx-auto max-w-7xl py-12 px-4 sm:py-16 sm:px-6 lg:px-8 lg:py-20">
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -234,31 +235,27 @@ export default function Home() {
                 problems I was able to create
               </p>
             </div>
-            <dl className="mt-10 text-center sm:mx-auto sm:grid sm:max-w-3xl sm:grid-cols-3 sm:gap-8">
-              <div className="mt-10 flex flex-col sm:mt-0">
-                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-blue-200">
-                  World-Class Products
-                </dt>
-                <dd className="order-1 text-5xl font-bold tracking-tight text-white">
-                  12
-                </dd>
-              </div>
-              <div className="mt-10 flex flex-col sm:mt-0">
-                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-blue-200">
-                  Trust of partners
-                </dt>
-                <dd className="order-1 text-5xl font-bold tracking-tight text-white">
-                  100%
-                </dd>
-              </div>
-              <div className="mt-10 flex flex-col sm:mt-0">
-                <dt className="order-2 mt-2 text-lg font-medium leading-6 text-blue-200">
-                  Opportunities
-                </dt>
-                <dd className="order-1 text-5xl font-bold tracking-tight text-white">
-                  ∞
-                </dd>
-              </div>
+            <dl className="mt-10 text-center sm:mx-auto sm:grid sm:max-w-3xl sm:grid-cols-3 sm:gap-4">
+              <dt className="order-2 text-lg font-medium leading-6 text-blue-200">
+                World-Class Products
+              </dt>
+              <dd className="order-1 text-5xl font-bold tracking-tight text-white mb-6 sm:mb-0">
+                12
+              </dd>
+
+              <dt className="order-2 text-lg font-medium leading-6 text-blue-200">
+                Trust of partners
+              </dt>
+              <dd className="order-1 text-5xl font-bold tracking-tight text-white mb-6 sm:mb-0">
+                100%
+              </dd>
+
+              <dt className="order-2 text-lg font-medium leading-6 text-blue-200">
+                Opportunities
+              </dt>
+              <dd className="order-1 text-5xl font-bold tracking-tight text-white">
+                ∞
+              </dd>
             </dl>
           </div>
         </section>
@@ -274,7 +271,7 @@ export default function Home() {
             <h2 className="text-2xl font-bold tracking-tight sm:text-4xl">
               Leave a message
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-gray-600">
+            <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-gray-400">
               I'm always open to new partnerships and opportunities. If you have
               any questions or just want to say hi, feel free to contact me.
             </p>
@@ -284,7 +281,7 @@ export default function Home() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-400"
               >
                 Email <span className="text-red-600">*</span>
               </label>
@@ -300,7 +297,7 @@ export default function Home() {
                   })}
                   type="email"
                   id="email"
-                  className={`block w-full h-10 rounded-md border px-3 pr-10 sm:text-sm${
+                  className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md border px-3 pr-10 sm:text-sm${
                     contactForm.formState.errors.email
                       ? ` ${invalidInputClassName}`
                       : ""
@@ -328,7 +325,7 @@ export default function Home() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-400"
               >
                 Name <span className="text-red-600">*</span>
               </label>
@@ -339,7 +336,7 @@ export default function Home() {
                   })}
                   type="text"
                   id="name"
-                  className={`block w-full h-10 rounded-md border px-3 pr-10 sm:text-sm${
+                  className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md border px-3 pr-10 sm:text-sm${
                     contactForm.formState.errors.name
                       ? ` ${invalidInputClassName}`
                       : ""
@@ -368,7 +365,7 @@ export default function Home() {
           <div>
             <label
               htmlFor="message"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-400"
             >
               Message <span className="text-red-600">*</span>
             </label>
@@ -388,7 +385,7 @@ export default function Home() {
                   },
                 })}
                 id="message"
-                className={`block w-full h-32 rounded-md border px-3 py-2 pr-10 sm:text-sm${
+                className={`bg-zinc-800 border-zinc-700 block w-full h-32 rounded-md border px-3 py-2 pr-10 sm:text-sm${
                   contactForm.formState.errors.message
                     ? ` ${invalidInputClassName}`
                     : ""
@@ -415,22 +412,22 @@ export default function Home() {
           <button
             disabled={contactForm.formState.isSubmitting}
             type="submit"
-            className="place-self-end inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="place-self-end inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-base font-medium text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Send Message
           </button>
         </form>
 
-        <footer className="bg-white">
+        <footer className="bg-zinc-800 border-t border-zinc-700">
           <div className="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
-            <div className="mt-8 flex justify-center space-x-6">
+            <div className="flex justify-center space-x-4">
               {social.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-300"
                 >
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
@@ -448,10 +445,10 @@ export default function Home() {
 }
 
 const keywords = [
-  { name: "Speed", color: "text-yellow-600" },
-  { name: "Reliability", color: "text-blue-600" },
-  { name: "Dedication", color: "text-green-700" },
-  { name: "Responsiveness", color: "text-red-700" },
+  { name: "Speed", color: "text-amber-500" },
+  { name: "Reliability", color: "text-blue-500" },
+  { name: "Dedication", color: "text-green-500" },
+  { name: "Responsiveness", color: "text-red-500" },
 ];
 
 const social = [
