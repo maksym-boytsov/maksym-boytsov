@@ -122,6 +122,7 @@ export default function Home() {
           </div>
           <div className="hidden md:block relative">
             <img
+              alt="Man walking towards his shadow."
               src="shadow.jpg"
               className="w-full h-full absolute bottom-0 right-0 left-0 top-0 object-cover z-0"
             />
