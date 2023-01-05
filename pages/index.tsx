@@ -10,6 +10,10 @@ import {
 import { useRef } from "react";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
+import Image from "next/image";
+
+import maksymSrc from "../public/maksym.jpg";
+import shadowSrc from "../public/shadow.jpg";
 
 export default function Home() {
   const contactForm = useForm({
@@ -61,10 +65,10 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div className="grid grid-flow-col items-center">
               <div className="mr-3 flex-shrink-0">
-                <img
+                <Image
                   className="inline-block h-12 w-12 sm:h-14 sm:w-14 rounded-full object-cover"
-                  src="maksym.jpg"
-                  alt=""
+                  src={maksymSrc}
+                  alt="Maksym Boytsov"
                 />
               </div>
               <div>
@@ -121,10 +125,11 @@ export default function Home() {
             </button>
           </div>
           <div className="hidden md:block relative">
-            <img
+            <Image
               alt="Man walking towards his shadow."
-              src="shadow.jpg"
-              className="w-full h-full absolute bottom-0 right-0 left-0 top-0 object-cover z-0"
+              src={shadowSrc}
+              fill
+              className="w-full h-full absolute bottom-0 right-0 left-0 top-0 object-cover"
             />
           </div>
           <button
