@@ -8,9 +8,9 @@ module.exports = {
     extend: {
       keyframes: {
         "gradient-fade": {
-          "0%": { "background-position": "96% 0%" },
-          "50%": { "background-position": "5% 100%" },
-          "100%": { "background-position": "96% 0%" },
+          "0%": { "background-position": "40% 100%" },
+          "50%": { "background-position": "96% 0%" },
+          "100%": { "background-position": "40% 100%" },
         },
       },
     },

@@ -100,14 +100,17 @@ export default function Home() {
         >
           <div className="h-screen grid gap-5 justify-center items-center justify-items-center content-center">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-              {keywords.map((keyword) => (
-                <p
-                  key={keyword.name}
-                  className={`mt-1 animate-[gradient-fade_3s_ease-in-out_infinite] bg-[length:200%] bg-bottom bg-gradient-to-r ${keyword.fromColor} ${keyword.toColor} text-transparent bg-clip-text text-4xl font-bold tracking-tight  sm:text-5xl lg:text-6xl`}
-                >
-                  {keyword.name}
-                </p>
-              ))}
+              {keywords.map((keyword, index) => {
+                return (
+                  <p
+                    key={keyword.name}
+                    style={{ animationDelay: `${index}s` }}
+                    className={`mt-1 animate-[gradient-fade_4s_ease-out_infinite] bg-[length:600%] bg-bottom bg-gradient-to-r ${keyword.fromColor} ${keyword.viaColor} to-stone-500 text-transparent bg-clip-text text-4xl font-bold tracking-tight  sm:text-5xl lg:text-6xl`}
+                  >
+                    {keyword.name}
+                  </p>
+                );
+              })}
 
               <p className="mx-auto mt-5 max-w-xl text-xl text-gray-400">
                 I value in myself and the people I work with.
@@ -457,17 +460,21 @@ export default function Home() {
 }
 
 const keywords = [
-  { name: "Speed", fromColor: "from-cyan-300", toColor: "to-blue-300" },
-  { name: "Reliability", fromColor: "from-cyan-400", toColor: "to-blue-400" },
+  { name: "Speed", fromColor: "from-cyan-500", viaColor: "via-cyan-400" },
+  {
+    name: "Reliability",
+    fromColor: "from-sky-500",
+    viaColor: "via-sky-400",
+  },
   {
     name: "Dedication",
-    fromColor: "from-cyan-500",
-    toColor: "to-blue-500",
+    fromColor: "from-blue-500",
+    viaColor: "via-blue-400",
   },
   {
     name: "Responsiveness",
-    fromColor: "from-cyan-600",
-    toColor: "to-blue-600",
+    fromColor: "from-indigo-500",
+    viaColor: "via-indigo-400",
   },
 ];
 
