@@ -57,23 +57,23 @@ export default function Home() {
       </Head>
 
       <main className="text-zinc-100">
-        <header className="fixed z-10 backdrop-blur-sm bg-zinc-900/75 rounded-full left-0 right-0 top-2 py-3 mx-auto max-w-7xl px-2 sm:px-4">
+        <header className="fixed z-10 backdrop-blur-sm bg-zinc-900/75 rounded-full left-0 right-0 top-2 py-1.5 sm:py-3 mx-auto max-w-7xl px-2 sm:px-4">
           <div className="flex justify-between items-center">
             <div className="grid grid-flow-col items-center">
               <div className="mr-3 flex-shrink-0">
                 <img
-                  className="inline-block h-14 w-14 rounded-full object-cover"
+                  className="inline-block h-12 w-12 sm:h-14 sm:w-14 rounded-full object-cover"
                   src="maksym.jpg"
                   alt=""
                 />
               </div>
               <div>
-                <h1 className="text-lg font-bold">Maksym Boytsov</h1>
-                <h2>🧑‍💻 Software Engineer</h2>
+                <h1 className="text-md sm:text-lg font-bold">Maksym Boytsov</h1>
+                <h2 className="text-sm sm:text-md">🧑‍💻 Software Engineer</h2>
               </div>
             </div>
 
-            <div className="flex justify-center space-x-4">
+            <div className="flex justify-center space-x-2 sm:space-x-4">
               {social.map((item) => (
                 <a
                   key={item.name}
@@ -92,41 +92,47 @@ export default function Home() {
 
         <section
           id="hero"
-          className="relative bg-zinc-900 h-screen grid gap-5 justify-center items-center justify-items-center content-center border-b border-zinc-700"
+          className="relative bg-zinc-900 h-screen grid md:grid-cols-2 grid-flow-col border-b border-zinc-700"
         >
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            {keywords.map((keyword) => (
-              <p
-                key={keyword.color}
-                className={`mt-1 text-4xl font-bold tracking-tight ${keyword.color} sm:text-5xl lg:text-6xl`}
-              >
-                {keyword.name}
+          <div className="h-screen grid gap-5 justify-center items-center justify-items-center content-center">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+              {keywords.map((keyword) => (
+                <p
+                  key={keyword.color}
+                  className={`mt-1 text-4xl font-bold tracking-tight ${keyword.color} sm:text-5xl lg:text-6xl`}
+                >
+                  {keyword.name}
+                </p>
+              ))}
+
+              <p className="mx-auto mt-5 max-w-xl text-xl text-gray-400">
+                I value in myself and the people I work with.
               </p>
-            ))}
-
-            <p className="mx-auto mt-5 max-w-xl text-xl text-gray-400">
-              I value in myself and the people I work with.
-            </p>
+            </div>
+            <button
+              onClick={() =>
+                contactRef.current.scrollIntoView({ behavior: "smooth" })
+              }
+              type="button"
+              className="inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-base font-medium text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            >
+              <UserPlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              Let's Connect
+            </button>
           </div>
-
-          <button
-            onClick={() =>
-              contactRef.current.scrollIntoView({ behavior: "smooth" })
-            }
-            type="button"
-            className="inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-base font-medium text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
-            <UserPlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-            Let's Connect
-          </button>
-
+          <div className="hidden md:block relative">
+            <img
+              src="shadow.jpg"
+              className="w-full h-full absolute bottom-0 right-0 left-0 top-0 object-cover z-0"
+            />
+          </div>
           <button
             aria-label="Scroll down"
             type="button"
             onClick={() =>
               experienceRef.current.scrollIntoView({ behavior: "smooth" })
             }
-            className="absolute bottom-4 inline-flex items-center rounded-full border border-transparent bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            className="absolute bottom-4 right-1/2 translate-x-1/2 inline-flex items-center rounded-full border border-transparent bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
             <ArrowDownIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -136,7 +142,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl py-20 px-6 sm:py-24 lg:px-8 lg:py-32">
             <div className="text-center">
               <h2 className="mb-10 text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
-                Skills
+                🙌 Skills 🙌
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
@@ -187,7 +193,7 @@ export default function Home() {
 
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
-                Experience
+                🧑‍💻 Experience 🧑‍💻
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-gray-400">
                 Majority of my experience in the field of software development.
@@ -228,7 +234,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl py-12 px-4 sm:py-16 sm:px-6 lg:px-8 lg:py-20">
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Trusted by companies and people
+                Trusted by companies and people 🤝
               </h2>
               <p className="mt-3 text-xl text-blue-200 sm:mt-4">
                 By consistent flow of engineering, consulting and solving
@@ -269,7 +275,7 @@ export default function Home() {
         >
           <div className="text-center">
             <h2 className="text-2xl font-bold tracking-tight sm:text-4xl">
-              Leave a message
+              Leave a message 📝
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-gray-400">
               I'm always open to new partnerships and opportunities. If you have
@@ -297,7 +303,7 @@ export default function Home() {
                   })}
                   type="email"
                   id="email"
-                  className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md border px-3 pr-10 sm:text-sm${
+                  className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md autofill:bg-zinc-700 border px-3 pr-10 sm:text-sm${
                     contactForm.formState.errors.email
                       ? ` ${invalidInputClassName}`
                       : ""
@@ -336,7 +342,7 @@ export default function Home() {
                   })}
                   type="text"
                   id="name"
-                  className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md border px-3 pr-10 sm:text-sm${
+                  className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md autofill:bg-zinc-700 border px-3 pr-10 sm:text-sm${
                     contactForm.formState.errors.name
                       ? ` ${invalidInputClassName}`
                       : ""
@@ -385,7 +391,7 @@ export default function Home() {
                   },
                 })}
                 id="message"
-                className={`bg-zinc-800 border-zinc-700 block w-full h-32 rounded-md border px-3 py-2 pr-10 sm:text-sm${
+                className={`bg-zinc-800 border-zinc-700 block w-full h-32 rounded-md autofill:bg-zinc-700 border px-3 py-2 pr-10 sm:text-sm${
                   contactForm.formState.errors.message
                     ? ` ${invalidInputClassName}`
                     : ""
