@@ -102,8 +102,8 @@ export default function Home() {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
               {keywords.map((keyword) => (
                 <p
-                  key={keyword.color}
-                  className={`mt-1 text-4xl font-bold tracking-tight ${keyword.color} sm:text-5xl lg:text-6xl`}
+                  key={keyword.name}
+                  className={`mt-1 animate-[gradient-fade_3s_ease-in-out_infinite] bg-[length:200%] bg-bottom bg-gradient-to-r ${keyword.fromColor} ${keyword.toColor} text-transparent bg-clip-text text-4xl font-bold tracking-tight  sm:text-5xl lg:text-6xl`}
                 >
                   {keyword.name}
                 </p>
@@ -457,10 +457,18 @@ export default function Home() {
 }
 
 const keywords = [
-  { name: "Speed", color: "text-amber-500" },
-  { name: "Reliability", color: "text-blue-500" },
-  { name: "Dedication", color: "text-green-500" },
-  { name: "Responsiveness", color: "text-red-500" },
+  { name: "Speed", fromColor: "from-cyan-300", toColor: "to-blue-300" },
+  { name: "Reliability", fromColor: "from-cyan-400", toColor: "to-blue-400" },
+  {
+    name: "Dedication",
+    fromColor: "from-cyan-500",
+    toColor: "to-blue-500",
+  },
+  {
+    name: "Responsiveness",
+    fromColor: "from-cyan-600",
+    toColor: "to-blue-600",
+  },
 ];
 
 const social = [
