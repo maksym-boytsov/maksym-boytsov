@@ -57,7 +57,7 @@ export default function Home() {
       </Head>
 
       <main className="text-zinc-100">
-        <header className="fixed z-10 backdrop-blur-sm bg-zinc-900/75 rounded-bl-md rounded-br-md left-0 right-0 py-3 mx-auto max-w-7xl px-2 sm:px-4">
+        <header className="fixed z-10 backdrop-blur-sm bg-zinc-900/75 rounded-full left-0 right-0 top-2 py-3 mx-auto max-w-7xl px-2 sm:px-4">
           <div className="flex justify-between items-center">
             <div className="grid grid-flow-col items-center">
               <div className="mr-3 flex-shrink-0">
