@@ -1,6 +1,8 @@
 # Hi there 👋
 
-I am Max - Software Engineer focused on Web3 technologies - currently based in Warsaw, Poland
+I am Max - Entrepreneur and Software Engineer
+
+Focused on **Web Engineering as a whole, AI and Web3 Technologies** - currently based in [Warsaw, Poland](https://goo.gl/maps/UXpH9vzJrqujfj2M9)
 
 - 🔨 Bulding world-class products for startups & enterprises
 - 🚀 Familiar with & using a lot of different technologies, due to my experience in different industries
@@ -12,7 +14,7 @@ I am Max - Software Engineer focused on Web3 technologies - currently based in W
 📫 You could reach me via:
 
 - [LinkedIn](https://www.linkedin.com/in/maksym-boytsov/)
-- [Twitter](https://twitter.com/maksymboytsov)
+- [Twitter](https://twitter.com/max_boytsov)
 - [Email](mailto:maksym.boytsov@gmail.com?subject=[GitHub])
 
 Also make sure to check out [Personal Website](https://www.maksym.page/)
