@@ -14,7 +14,7 @@ Focused on **Web Engineering as a whole, AI and Web3 Technologies** - currently 
 📫 You could reach me via:
 
 - [LinkedIn](https://www.linkedin.com/in/maksym-boytsov/)
-- [Twitter](https://twitter.com/max_boytsov)
+- [Twitter](https://twitter.com/maksym_boytsov)
 - [Email](mailto:maksym.boytsov@gmail.com?subject=[GitHub])
 
 Also make sure to check out [Personal Website](https://www.maksym.page/)
