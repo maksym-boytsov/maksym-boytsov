@@ -131,8 +131,11 @@ export default function Home() {
             <Image
               alt="Man walking towards his shadow."
               src={shadowSrc}
-              fill
+              placeholder="blur"
+              quality={75}
               className="w-full h-full absolute bottom-0 right-0 left-0 top-0 object-cover"
+              fill
+              priority
             />
           </div>
           <button
