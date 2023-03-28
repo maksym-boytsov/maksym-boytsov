@@ -1,13 +1,10 @@
 import { FaLinkedin } from "react-icons/fa";
 import {
   ArrowDownIcon,
-  BriefcaseIcon,
   ExclamationCircleIcon,
-  PlusIcon,
   UserPlusIcon,
-  WindowIcon,
 } from "@heroicons/react/24/solid";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -15,7 +12,14 @@ import Image from "next/image";
 import maksymSrc from "../public/maksym.jpg";
 import shadowSrc from "../public/shadow.jpg";
 
+const COMMON_PHRASES = [
+  "How old are you?",
+  "What are your skills?",
+  "Do you have any pets?",
+];
+
 export default function Home() {
+  const [completion, setCompletion] = useState("");
   const contactForm = useForm({
     defaultValues: {
       email: "",
@@ -23,10 +27,26 @@ export default function Home() {
       message: "",
     },
   });
-  const experienceRef = useRef(null);
+
+  const createCompletionForm = useForm({
+    defaultValues: {
+      question: "",
+    },
+  });
+
+  const aiRef = useRef(null);
   const contactRef = useRef(null);
 
-  const handleSubmit = contactForm.handleSubmit(async (data) => {
+  const typeWriter = (text: string, i: number = 0) => {
+    const timeoutMs = 5;
+
+    if (i < text.length) {
+      setCompletion((prev) => prev + text.charAt(i));
+      setTimeout(() => typeWriter(text, i + 1), timeoutMs);
+    }
+  };
+
+  const handleSendMessage = contactForm.handleSubmit(async (data) => {
     try {
       const response = await fetch("/api/send-message", {
         method: "POST",
@@ -47,8 +67,37 @@ export default function Home() {
     }
   });
 
+  const handleCreateCompletion = createCompletionForm.handleSubmit(
+    async (formData) => {
+      setCompletion("");
+      try {
+        const response = await fetch("/api/ai/completion", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          createCompletionForm.reset();
+        } else {
+          alert("Failed to create completion.");
+        }
+
+        const data = await response.json();
+
+        if (data.message) {
+          typeWriter(data.message);
+        }
+      } catch (error) {
+        alert("Error creating completion. Please try again.");
+      }
+    }
+  );
+
   const invalidInputClassName =
-    "border-red-300 text-red-900 focus:border-red-500 focus:outline-none focus:ring-red-500";
+    "border-red-300 text-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500";
 
   return (
     <>
@@ -141,148 +190,154 @@ export default function Home() {
           <button
             aria-label="Scroll down"
             type="button"
-            onClick={() =>
-              experienceRef.current.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={() => aiRef.current.scrollIntoView({ behavior: "smooth" })}
             className="absolute bottom-4 right-1/2 translate-x-1/2 inline-flex items-center rounded-full border border-transparent bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
             <ArrowDownIcon className="h-5 w-5" aria-hidden="true" />
           </button>
         </section>
 
-        <section ref={experienceRef} id="experience" className="bg-zinc-800">
-          <div className="mx-auto max-w-7xl py-20 px-6 sm:py-24 lg:px-8 lg:py-32">
-            <div className="text-center">
-              <h2 className="mb-10 text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
-                🙌 Skills 🙌
+        <section id="ai" ref={aiRef} className="bg-zinc-800">
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="grid gap-4 relative isolate overflow-hidden bg-zinc-800 px-6 py-24 sm:rounded-3xl sm:px-24 xl:py-32">
+              <h2 className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Ask me anything 🤖
               </h2>
+              <p className="mx-auto mt-2 text-center text-lg leading-8 text-gray-400">
+                Specifically trained AI model will answer any question about me
+                🦾
+              </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
-                {skills.map((skill) => (
-                  <p
-                    key={skill}
-                    className="text-md font-semibold leading-8 text-gray-200"
-                  >
-                    {skill}
-                  </p>
-                ))}
+              <div className="isolate mx-auto grid justify-items-center gap-1 md:block">
+                {COMMON_PHRASES.map((phrase, index) => {
+                  const isLast = index === COMMON_PHRASES.length - 1;
+                  const isFirst = index === 0;
+
+                  const className = `rounded-md md:rounded-none relative inline-flex items-center bg-zinc-900 px-3 py-2 text-sm font-semibold text-zinc-100 ring-1 ring-inset ring-gray-700 hover:bg-zinc-800 focus:z-10 ${
+                    isLast ? "md:rounded-r-md" : ""
+                  } ${isFirst ? "md:rounded-l-md" : ""}`;
+
+                  return (
+                    <button
+                      key={phrase}
+                      type="button"
+                      className={className}
+                      onClick={() =>
+                        createCompletionForm.setValue("question", phrase)
+                      }
+                    >
+                      {phrase}
+                    </button>
+                  );
+                })}
               </div>
-            </div>
 
-            <div className="mt-10 text-center">
-              <div className="text-center grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-2 lg:gap-x-8">
-                {languages.map((language) => (
-                  <p
-                    key={language}
-                    className="text-md font-semibold leading-8 text-gray-200"
-                  >
-                    {language}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative my-20">
-              <div
-                className="absolute inset-0 flex items-center"
-                aria-hidden="true"
+              <form
+                onSubmit={handleCreateCompletion}
+                className="mx-auto mt-2 flex max-w-md md:gap-x-4"
               >
-                <div className="w-full border-t border-blue-400" />
-              </div>
-              <div className="relative flex justify-center">
-                <button
-                  onClick={() =>
-                    contactRef.current.scrollIntoView({ behavior: "smooth" })
-                  }
-                  type="button"
-                  className="inline-flex items-center rounded-full bg-blue-400 px-4 py-1.5 text-sm font-medium leading-5 text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                >
-                  <PlusIcon className="h-5 w-5 mr-1" />
-                  <span>Write a Message</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
-                🧑‍💻 Experience 🧑‍💻
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-gray-400">
-                Majority of my experience in the field of software development.
-              </p>
-            </div>
-            <div className="mt-20 grid grid-cols-1 gap-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
-              {experiences.map((experience) => (
-                <div key={experience.name} className="relative">
-                  <div>
-                    <BriefcaseIcon
-                      className="absolute mt-1 h-6 w-6 text-blue-400"
-                      aria-hidden="true"
+                <label htmlFor="question" className="sr-only">
+                  Question
+                </label>
+                <div className="grid gap-2">
+                  <div className="grid grid-flow-col gap-x-2">
+                    <input
+                      {...createCompletionForm.register("question", {
+                        required: {
+                          message: "Please enter a question.",
+                          value: true,
+                        },
+                        minLength: {
+                          value: 6,
+                          message:
+                            "Your question must be at least 6 characters.",
+                        },
+                        maxLength: {
+                          value: 100,
+                          message:
+                            "Your question must be at most 100 characters.",
+                        },
+                      })}
+                      className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md autofill:bg-zinc-700 border px-3 pr-10 sm:text-sm${
+                        createCompletionForm.formState.errors.question
+                          ? ` ${invalidInputClassName}`
+                          : ""
+                      }`}
+                      placeholder="Your question..."
                     />
-                    <p className="ml-10 text-lg font-semibold leading-8 text-gray-100">
-                      {experience.company}
-                    </p>
-                    <WindowIcon
-                      className="absolute mt-1 h-6 w-6 text-blue-400"
-                      aria-hidden="true"
-                    />
-                    <p className="ml-10 text-md font-semibold leading-8 text-gray-100">
-                      {experience.name}
-                    </p>
+                    <button
+                      type="submit"
+                      disabled={createCompletionForm.formState.isSubmitting}
+                      className="flex-none rounded-md bg-zinc-600 py-2.5 px-3.5 text-sm font-semibold text-zinc-100 shadow-sm hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    >
+                      {createCompletionForm.formState.isSubmitting
+                        ? "Loading..."
+                        : "Ask"}
+                    </button>
                   </div>
-                  <div className="mt-2 ml-10 text-base leading-7 text-gray-400">
-                    {experience.description}
-                  </div>
-                  <p className="mt-2 ml-10 text-gray-200 text-sm">
-                    {experience.start} - {experience.end}
-                  </p>
+                  {createCompletionForm.formState.errors.question ? (
+                    <p className="text-red-500 text-sm">
+                      {createCompletionForm.formState.errors.question.message}
+                    </p>
+                  ) : null}
                 </div>
-              ))}
+              </form>
+
+              <svg
+                className="absolute top-0 left-1/2 -z-10  -translate-x-1/2 blur-3xl xl:-top-6"
+                viewBox="0 0 1155 678"
+                fill="none"
+              >
+                <path
+                  fill="url(#09dbde42-e95c-4b47-a4d6-0c523c2fca9a)"
+                  fillOpacity=".3"
+                  d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
+                />
+                <defs>
+                  <linearGradient
+                    id="09dbde42-e95c-4b47-a4d6-0c523c2fca9a"
+                    x1="1155.49"
+                    x2="-78.208"
+                    y1=".177"
+                    y2="474.645"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#0284c7" />
+                    <stop offset={1} stopColor="#2563eb" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              {completion && (
+                <div
+                  className={`${
+                    completion
+                      ? "opacity-1 p-4 mt-10"
+                      : "opacity-0 h-0 p-0 mt-0"
+                  } transition-all duration-100 grid gap-2 items-center mx-auto opacity-1 max-w-2xl border border-zinc-500 rounded-md border-dashed bg-zinc-900`}
+                >
+                  <p>{completion}</p>
+
+                  <button
+                    type="button"
+                    onClick={() => setCompletion(null)}
+                    className=" flex-none rounded-md bg-zinc-600 py-2.5 px-3.5 text-sm font-semibold text-zinc-100 shadow-sm hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    Reset
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </section>
 
-        <section id="stats" className="bg-blue-900">
-          <div className="mx-auto max-w-7xl py-12 px-4 sm:py-16 sm:px-6 lg:px-8 lg:py-20">
-            <div className="mx-auto max-w-4xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Trusted by companies and people 🤝
-              </h2>
-              <p className="mt-3 text-xl text-blue-200 sm:mt-4">
-                By consistent flow of engineering, consulting and solving
-                problems I was able to create
-              </p>
-            </div>
-            <dl className="mt-10 text-center sm:mx-auto sm:grid sm:max-w-3xl sm:grid-cols-3 sm:gap-4">
-              <dt className="order-2 text-lg font-medium leading-6 text-blue-200">
-                World-Class Products
-              </dt>
-              <dd className="order-1 text-5xl font-bold tracking-tight text-white mb-6 sm:mb-0">
-                12
-              </dd>
-
-              <dt className="order-2 text-lg font-medium leading-6 text-blue-200">
-                Trust of partners
-              </dt>
-              <dd className="order-1 text-5xl font-bold tracking-tight text-white mb-6 sm:mb-0">
-                100%
-              </dd>
-
-              <dt className="order-2 text-lg font-medium leading-6 text-blue-200">
-                Opportunities
-              </dt>
-              <dd className="order-1 text-5xl font-bold tracking-tight text-white">
-                ∞
-              </dd>
-            </dl>
-          </div>
-        </section>
+        <section id="stats" className="bg-blue-900"></section>
 
         <form
           id="contact"
           ref={contactRef}
           noValidate
-          onSubmit={handleSubmit}
+          onSubmit={handleSendMessage}
           className="grid gap-10 py-10 px-4 mx-auto max-w-7xl sm:py-16 sm:px-6 lg:py-20 lg:px-8"
         >
           <div className="text-center">
@@ -408,7 +463,7 @@ export default function Home() {
                     ? ` ${invalidInputClassName}`
                     : ""
                 }`}
-                placeholder="you@example.com"
+                placeholder="Hi, I'm interested in working with you on..."
                 defaultValue={contactForm.formState.defaultValues.message}
                 aria-describedby="message-error"
               />
@@ -432,7 +487,7 @@ export default function Home() {
             type="submit"
             className="place-self-end inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-base font-medium text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Send Message
+            {contactForm.formState.isSubmitting ? "Loading..." : "Send Message"}
           </button>
         </form>
 
