@@ -20,6 +20,7 @@ const COMMON_PHRASES = [
 
 export default function Home() {
   const [completion, setCompletion] = useState("");
+
   const contactForm = useForm({
     defaultValues: {
       email: "",
