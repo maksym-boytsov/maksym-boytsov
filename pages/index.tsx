@@ -324,13 +324,13 @@ export default function Home() {
                 >
                   <p>{completion}</p>
 
-                  <button
+                  <Button
+                    colorScheme="gray"
                     type="button"
                     onClick={() => setCompletion(null)}
-                    className=" flex-none rounded-md bg-zinc-600 py-2.5 px-3.5 text-sm font-semibold text-zinc-100 shadow-sm hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    Reset
-                  </button>
+                    Got it!
+                  </Button>
                 </div>
               )}
             </div>
