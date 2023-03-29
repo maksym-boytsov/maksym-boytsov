@@ -1,4 +1,4 @@
-import { FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   ArrowDownIcon,
   ExclamationCircleIcon,
@@ -11,6 +11,7 @@ import Image from "next/image";
 
 import maksymSrc from "../public/maksym.jpg";
 import shadowSrc from "../public/shadow.jpg";
+import { Button } from "../components";
 
 const COMMON_PHRASES = [
   "How old are you?",
@@ -104,17 +105,20 @@ export default function Home() {
     <>
       <Head>
         <title>Maksym Boytsov</title>
-        <meta name="description" content="Maksym Boytsov's personal website" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
-        <link rel="canonical" href="https://maksym.page/" />
+        <meta
+          name="description"
+          content="Welcome to Maksym Boytsov's personal website! As a full-stack software engineer and entrepreneur, I'm passionate about building innovative solutions that make a difference. Let's connect and bring ideas to life."
+        />
+
+        <link rel="canonical" href="https://www.maksym.page/" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
       <main className="text-zinc-100">
         <header className="fixed z-10 backdrop-blur-sm bg-zinc-900/75 rounded-full left-0 right-0 top-2 py-1.5 sm:py-3 mx-auto max-w-7xl px-2 sm:px-4">
           <div className="flex justify-between items-center">
-            <div className="grid grid-flow-col items-center">
-              <div className="mr-3 flex-shrink-0">
+            <div className="grid grid-flow-col items-center gap-3">
+              <div className="flex-shrink-0">
                 <Image
                   className="inline-block h-12 w-12 sm:h-14 sm:w-14 rounded-full object-cover"
                   src={maksymSrc}
@@ -128,6 +132,9 @@ export default function Home() {
             </div>
 
             <div className="flex justify-center space-x-2 sm:space-x-4">
+              <div className="grid grid-flow-col gap-2 ml-4">
+                <a href="#ai">Ask Me</a>·<a href="#contact">Contact </a>
+              </div>
               {social.map((item) => (
                 <a
                   key={item.name}
@@ -166,16 +173,15 @@ export default function Home() {
                 I value in myself and the people I work with.
               </p>
             </div>
-            <button
+            <Button
               onClick={() =>
                 contactRef.current.scrollIntoView({ behavior: "smooth" })
               }
               type="button"
-              className="inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-base font-medium text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
             >
               <UserPlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
               Let's Connect
-            </button>
+            </Button>
           </div>
           <div className="hidden md:block relative">
             <Image
@@ -202,7 +208,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="grid gap-4 relative isolate overflow-hidden bg-zinc-800 px-6 py-24 sm:rounded-3xl sm:px-24 xl:py-32">
               <h2 className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Ask me anything 🤖
+                Ask me anything 💭
               </h2>
               <p className="mx-auto mt-2 text-center text-lg leading-8 text-gray-400">
                 Specifically trained AI model will answer any question about me
@@ -259,22 +265,21 @@ export default function Home() {
                             "Your question must be at most 100 characters.",
                         },
                       })}
-                      className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md autofill:bg-zinc-700 border px-3 pr-10 sm:text-sm${
+                      className={`bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md autofill:bg-zinc-700 border px-3 sm:text-sm${
                         createCompletionForm.formState.errors.question
                           ? ` ${invalidInputClassName}`
                           : ""
                       }`}
                       placeholder="Your question..."
                     />
-                    <button
+                    <Button
                       type="submit"
                       disabled={createCompletionForm.formState.isSubmitting}
-                      className="flex-none rounded-md bg-zinc-600 py-2.5 px-3.5 text-sm font-semibold text-zinc-100 shadow-sm hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
                       {createCompletionForm.formState.isSubmitting
                         ? "Loading..."
                         : "Ask"}
-                    </button>
+                    </Button>
                   </div>
                   {createCompletionForm.formState.errors.question ? (
                     <p className="text-red-500 text-sm">
@@ -339,7 +344,7 @@ export default function Home() {
           ref={contactRef}
           noValidate
           onSubmit={handleSendMessage}
-          className="grid gap-10 py-10 px-4 mx-auto max-w-7xl sm:py-16 sm:px-6 lg:py-20 lg:px-8"
+          className="grid gap-10 py-24 px-4 mx-auto max-w-7xl sm:py-16 sm:px-6 lg:py-32 lg:px-8"
         >
           <div className="text-center">
             <h2 className="text-2xl font-bold tracking-tight sm:text-4xl">
@@ -483,17 +488,17 @@ export default function Home() {
               </p>
             )}
           </div>
-          <button
+          <Button
             disabled={contactForm.formState.isSubmitting}
             type="submit"
-            className="place-self-end inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-base font-medium text-zinc-900 shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="place-self-end"
           >
             {contactForm.formState.isSubmitting ? "Loading..." : "Send Message"}
-          </button>
+          </Button>
         </form>
 
         <footer className="bg-zinc-800 border-t border-zinc-700">
-          <div className="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center space-x-4">
               {social.map((item) => (
                 <a
@@ -508,7 +513,7 @@ export default function Home() {
                 </a>
               ))}
             </div>
-            <p className="mt-8 text-center text-base text-gray-400">
+            <p className="mt-6 text-center text-base text-gray-400">
               &copy; {new Date().getFullYear()} Maksym Boytsov. Crafted with 🫶
             </p>
           </div>
@@ -541,15 +546,7 @@ const social = [
   {
     name: "GitHub",
     href: "https://github.com/maksym-boytsov",
-    icon: (props) => (
-      <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-        <path
-          fillRule="evenodd"
-          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-          clipRule="evenodd"
-        />
-      </svg>
-    ),
+    icon: (props) => <FaGithub {...props} size="24" />,
   },
   {
     name: "Linkedin",
@@ -559,71 +556,6 @@ const social = [
   {
     name: "Twitter",
     href: "https://twitter.com/maksym_boytsov",
-    icon: (props) => (
-      <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-      </svg>
-    ),
+    icon: (props) => <FaTwitter {...props} size="24" />,
   },
-];
-
-const experiences = [
-  {
-    company: "Freelance",
-    name: "Web Developer",
-    description:
-      "Working with clients on Upwork as a freelance developers to help them build their websites.",
-    start: "Mar 2018",
-    end: "Aug 2019",
-  },
-  {
-    company: "Alpha Soft",
-    name: "Front-end Developer",
-    description: "Building a CRM web-application for the company's clients.",
-    start: "Aug 2019",
-    end: "Nov 2019",
-  },
-  {
-    company: "Startup House",
-    name: "Full-stack Engineer",
-    description:
-      "Worked with countless various teams on different projects to build and maintain web applications in a startup environment.",
-    start: "Dec 2019",
-    end: "Dec 2021",
-  },
-  {
-    company: "Fleek",
-    name: "Software Engineer",
-    description:
-      "Continuing to build and maintain world-class applications in web3 space.",
-    start: "Sep 2021",
-    end: "Now",
-  },
-];
-
-const skills = [
-  "TypeScript",
-  "JavaScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "GraphQL",
-  "Redux",
-  "Git",
-  "Databases (SQL, NoSQL)",
-  "Testing (Jest, Cypress)",
-  "CI/CD",
-  "Cloud Computing",
-  "Distributed Systems",
-  "Microservices",
-  "Design Systems",
-  "Design",
-  "Wallets (Metamask, WalletConnect)",
-  "Web3 (Ethers.js, Web3.js)",
-  "Blockchains (Ethereum, Polygon, BSC)",
-];
-
-const languages = [
-  "English, Ukrainian, Polish, Russian (Professional)",
-  "Spanish (Basic)",
 ];
