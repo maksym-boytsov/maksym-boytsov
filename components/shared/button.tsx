@@ -1,9 +1,11 @@
+"use server";
 import React, { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type ButtonColorSchemes = "blue" | "gray";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   colorScheme?: ButtonColorSchemes;
+  as?: React.ElementType;
 }
 
 const colorSchemes: Record<ButtonColorSchemes, string> = {
@@ -12,6 +14,7 @@ const colorSchemes: Record<ButtonColorSchemes, string> = {
 };
 
 export const Button = ({
+  as,
   className,
   colorScheme = "blue",
   ...props
@@ -22,5 +25,7 @@ export const Button = ({
     className
   );
 
-  return <button {...props} className={_className} />;
+  const Element = as || "button";
+
+  return <Element {...props} className={_className} />;
 };
