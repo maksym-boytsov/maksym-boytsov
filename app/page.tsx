@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "Crypto",
     "Blockchain",
   ],
-  themeColor: "#374151",
+  themeColor: "#111827",
   creator: "Maksym Boytsov",
   robots: "index, follow",
   openGraph: {
