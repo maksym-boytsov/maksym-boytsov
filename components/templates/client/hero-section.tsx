@@ -11,6 +11,17 @@ const HeroSection = () => {
       id="hero"
       className="relative bg-zinc-900 h-screen grid md:grid-cols-2 grid-flow-col border-b border-zinc-700"
     >
+      <div className="hidden md:block relative">
+        <Image
+          alt="Man walking towards his shadow."
+          src={shadowSrc}
+          placeholder="blur"
+          quality={75}
+          className="w-full h-full absolute bottom-0 right-0 left-0 top-0 object-cover"
+          fill
+          priority
+        />
+      </div>
       <div className="h-screen grid gap-5 justify-center items-center justify-items-center content-center">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           {keywords.map((keyword, index) => {
@@ -29,21 +40,10 @@ const HeroSection = () => {
             I value in myself and the people I work with.
           </p>
         </div>
-        <Button type="button">
+        <Button as="a" href="/#contact" type="button">
           <UserPlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
           Let's Connect
         </Button>
-      </div>
-      <div className="hidden md:block relative">
-        <Image
-          alt="Man walking towards his shadow."
-          src={shadowSrc}
-          placeholder="blur"
-          quality={75}
-          className="w-full h-full absolute bottom-0 right-0 left-0 top-0 object-cover"
-          fill
-          priority
-        />
       </div>
       <a
         href="#ai"
