@@ -52,27 +52,27 @@ export default function RootLayout({ children }) {
         </header>
 
         {children}
-      </body>
-      <footer className="bg-zinc-800 border-t border-zinc-700">
-        <div className="mx-auto max-w-7xl overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center space-x-4">
-            {social.map((item) => (
-              <AppLink
-                aria-label={item.name}
-                key={item.name}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <item.icon className="h-6 w-6" aria-hidden="true" />
-              </AppLink>
-            ))}
+        <footer className="bg-zinc-800 border-t border-zinc-700">
+          <div className="mx-auto max-w-7xl overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-center space-x-4">
+              {social.map((item) => (
+                <AppLink
+                  aria-label={item.name}
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                </AppLink>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-base text-gray-400">
+              &copy; {new Date().getFullYear()} Maksym Boytsov. Crafted with 🫶
+            </p>
           </div>
-          <p className="mt-6 text-center text-base text-gray-400">
-            &copy; {new Date().getFullYear()} Maksym Boytsov. Crafted with 🫶
-          </p>
-        </div>
-      </footer>
+        </footer>
+      </body>
     </html>
   );
 }
