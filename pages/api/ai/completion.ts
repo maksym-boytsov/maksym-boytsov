@@ -27,6 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
+      temperature: 0.7,
       messages: [
         {
           role: "system",

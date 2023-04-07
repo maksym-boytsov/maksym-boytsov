@@ -4,15 +4,21 @@ import CreateCompletionForm from "../components/templates/client/create-completi
 import ContactForm from "../components/templates/client/contact-form";
 import HeroSection from "../components/templates/client/hero-section";
 
+const title = "Maksym Boytsov";
+const description =
+  "Welcome to Maksym Boytsov's personal website! As a full-stack software engineer and entrepreneur, I'm passionate about building innovative solutions that make a difference. Let's connect and bring ideas to life.";
+const canonical = "https://www.maksym.page/";
+const fullName = "Maksym Boytsov";
+
 export const metadata: Metadata = {
-  title: "Maksym Boytsov",
-  description:
-    "Welcome to Maksym Boytsov's personal website! As a full-stack software engineer and entrepreneur, I'm passionate about building innovative solutions that make a difference. Let's connect and bring ideas to life.",
-  alternates: { canonical: "https://www.maksym.page/" },
+  title,
+  description,
+  alternates: { canonical },
   applicationName: "Maksym Boytsov",
+  colorScheme: "dark",
   authors: {
     url: "https://www.maksym.page/",
-    name: "Maksym Boytsov",
+    name: fullName,
   },
   generator: "Next.js",
   keywords: [
@@ -28,15 +34,19 @@ export const metadata: Metadata = {
     "Blockchain",
   ],
   themeColor: "#18181b",
-  creator: "Maksym Boytsov",
+  creator: fullName,
   robots: "index, follow",
   openGraph: {
-    type: "website",
-    locale: "en_IE",
-    url: "https://www.maksym.page/",
-    title: "Maksym Boytsov",
-    description:
-      "Welcome to Maksym Boytsov's personal website! As a full-stack software engineer and entrepreneur, I'm passionate about building innovative solutions that make a difference. Let's connect and bring ideas to life.",
+    title,
+    description,
+    type: "profile",
+    locale: "en_US",
+    url: canonical,
+  },
+  twitter: {
+    title,
+    description,
+    card: "summary",
   },
 };
 

@@ -1,4 +1,3 @@
-"use server";
 import React, { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 

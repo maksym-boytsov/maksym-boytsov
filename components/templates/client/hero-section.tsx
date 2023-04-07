@@ -1,12 +1,17 @@
 "use client";
 import { ArrowDownIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import shadowSrc from "public/shadow.jpg";
+import { hotjar } from "react-hotjar";
 
 import { Button } from "../../shared";
 
 const HeroSection = () => {
+  useEffect(() => {
+    hotjar.initialize(3442508, 6);
+  }, []);
+
   return (
     <section
       id="hero"
