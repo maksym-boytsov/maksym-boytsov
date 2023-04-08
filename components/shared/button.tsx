@@ -8,8 +8,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const colorSchemes: Record<ButtonColorSchemes, string> = {
-  blue: "bg-blue-500 text-zinc-100 hover:bg-blue-600 focus:ring-blue-500 hover:disabled:bg-blue-500",
-  gray: "bg-gray-500 text-zinc-100 hover:bg-gray-600 focus:ring-gray-500 hover:disabled:bg-gray-500",
+  blue: "bg-blue-300 text-zinc-900 hover:bg-blue-400 focus:ring-blue-400 hover:disabled:bg-blue-400",
+  gray: "bg-gray-300 text-zinc-900 hover:bg-gray-400 focus:ring-gray-400 hover:disabled:bg-gray-400",
 };
 
 export const Button = ({

@@ -162,7 +162,7 @@ const AISection = () => {
                   </Button>
                 </>
               ) : (
-                <p className="text-zinc-500 select-none">
+                <p className="text-zinc-400 select-none">
                   You will see the conversation here...
                 </p>
               )}
