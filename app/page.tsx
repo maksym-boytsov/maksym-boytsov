@@ -9,6 +9,7 @@ const description =
   "Welcome to Maksym Boytsov's personal website! As a full-stack software engineer and entrepreneur, I'm passionate about building innovative solutions that make a difference. Let's connect and bring ideas to life.";
 const canonical = "https://www.maksym.page/";
 const fullName = "Maksym Boytsov";
+const image = "https://avatars.githubusercontent.com/u/32408893?v=4";
 
 export const metadata: Metadata = {
   title,
@@ -41,11 +42,13 @@ export const metadata: Metadata = {
     description,
     type: "profile",
     locale: "en_US",
+    images: image,
     url: canonical,
   },
   twitter: {
     title,
     description,
+    images: image,
     card: "summary",
   },
 };
