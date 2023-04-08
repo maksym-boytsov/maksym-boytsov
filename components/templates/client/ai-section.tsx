@@ -14,7 +14,7 @@ import { Button, invalidInputClassName } from "../../shared";
 import Image from "next/image";
 
 const COMMON_PHRASES = [
-  "Where did you studied?",
+  "Where did you study?",
   "What are your skills?",
   "How old are you?",
 ];
