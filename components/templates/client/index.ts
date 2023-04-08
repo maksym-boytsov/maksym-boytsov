@@ -1,3 +1,3 @@
-export * from "./contact-form";
-export * from "./create-completion-form";
+export * from "./newsletter-form";
+export * from "./ai-section";
 export * from "./hero-section";

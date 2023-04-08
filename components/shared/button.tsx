@@ -20,7 +20,7 @@ export const Button = ({
 }: ButtonProps) => {
   const _className = twMerge(
     colorSchemes[colorScheme],
-    "inline-flex transition-colors duration-200 items-center rounded-md px-4 py-2 text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed justify-center",
+    "inline-flex h-10 transition-colors duration-200 items-center rounded-md px-4 py-2 text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed justify-center",
     className
   );
 

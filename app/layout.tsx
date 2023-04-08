@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Image from "next/image";
 
 import maksymSrc from "../public/maksym.jpg";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { AppLink } from "../components";
 
 export default function RootLayout({ children }) {
@@ -24,15 +24,13 @@ export default function RootLayout({ children }) {
               </div>
               <div>
                 <h1 className="text-md sm:text-lg font-bold">Maksym Boytsov</h1>
-                <h2 className="text-sm sm:text-md">🧑‍💻 Software Engineer</h2>
+                <h2 className="text-sm sm:text-md">
+                  Software Engineer • Entrepreneur
+                </h2>
               </div>
             </div>
 
-            <div className="flex justify-center space-x-4">
-              <div className="grid-flow-col gap-2 mx-4 hidden sm:grid">
-                <AppLink href="/#ai">Ask Me</AppLink>·
-                <AppLink href="/#contact">Contact </AppLink>
-              </div>
+            <div className="grid grid-flow-col justify-center gap-1 sm:space-x-4 mr-2 grid-rows-2 sm:grid-rows-1">
               {social.map((item) => (
                 <AppLink
                   key={item.name}
@@ -53,7 +51,7 @@ export default function RootLayout({ children }) {
 
         {children}
         <footer className="bg-zinc-800 border-t border-zinc-700">
-          <div className="mx-auto max-w-7xl overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl overflow-hidden py-6 px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center space-x-4">
               {social.map((item) => (
                 <AppLink
@@ -67,8 +65,8 @@ export default function RootLayout({ children }) {
                 </AppLink>
               ))}
             </div>
-            <p className="mt-6 text-center text-base text-gray-400">
-              &copy; {new Date().getFullYear()} Maksym Boytsov. Crafted with 🫶
+            <p className="mt-4 text-center text-base text-gray-400">
+              &copy;{new Date().getFullYear()} Maksym Boytsov • Crafted with 🫶
             </p>
           </div>
         </footer>
@@ -92,5 +90,10 @@ const social = [
     name: "Twitter",
     href: "https://twitter.com/maksym_boytsov",
     icon: (props) => <FaTwitter {...props} size="24" />,
+  },
+  {
+    name: "Discord",
+    href: "https://discord.com/users/818931087547695185",
+    icon: (props) => <FaDiscord {...props} size="24" />,
   },
 ];

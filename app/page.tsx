@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
-import CreateCompletionForm from "../components/templates/client/create-completion-form";
-import ContactForm from "../components/templates/client/contact-form";
+import AISection from "../components/templates/client/ai-section";
+import NewsletterForm from "../components/templates/client/newsletter-form";
 import HeroSection from "../components/templates/client/hero-section";
 
 const title = "Maksym Boytsov";
@@ -54,8 +54,8 @@ export default function HomePage() {
   return (
     <main className="text-zinc-100">
       <HeroSection />
-      <CreateCompletionForm />
-      <ContactForm />
+      <AISection />
+      <NewsletterForm />
     </main>
   );
 }
