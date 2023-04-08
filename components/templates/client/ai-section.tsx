@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   XMarkIcon,
-  ChatBubbleLeftEllipsisIcon,
+  PaperAirplaneIcon,
   UserIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/24/solid";
@@ -128,7 +128,7 @@ const AISection = () => {
           <div className="relative w-full max-w-2xl mx-auto">
             <div
               ref={chatRef}
-              className="grid items-start gap-2 p-4 h-80 font-medium overflow-auto transition-all duration-100 opacity-1 w-full border-2 border-dashed border-zinc-500 rounded-md bg-zinc-900"
+              className="grid items-start gap-2 p-4 h-60 font-medium overflow-auto transition-all duration-100 opacity-1 w-full border-2 border-dashed border-zinc-500 rounded-md bg-zinc-900"
             >
               {chatHasMessages ? (
                 <>
@@ -145,7 +145,7 @@ const AISection = () => {
                               alt="Maksym Boytsov"
                             />
                           )}
-                          <p className="pt-1.5">{message.content}</p>
+                          <p className="pt-1.5 pr-6">{message.content}</p>
                         </div>
                       );
                     })}
@@ -179,6 +179,7 @@ const AISection = () => {
             <div className="grid gap-2">
               <div className="relative grid grid-flow-col gap-x-2">
                 <input
+                  disabled={createCompletionForm.formState.isSubmitting}
                   {...createCompletionForm.register("message", {
                     required: {
                       message: "Please enter a message.",
@@ -194,7 +195,7 @@ const AISection = () => {
                     },
                   })}
                   className={twMerge(
-                    "bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md autofill:bg-zinc-700 border px-3 sm:text-md",
+                    "bg-zinc-800 border-zinc-700 block w-full h-10 rounded-md autofill:bg-zinc-700 border px-3 sm:text-md disabled:bg-zinc-700 disabled:cursor-not-allowed disabled:text-zinc-400",
                     createCompletionForm.formState.errors.message &&
                       invalidInputClassName
                   )}
@@ -211,13 +212,15 @@ const AISection = () => {
                 )}
 
                 <Button
+                  aria-label="Send"
                   type="submit"
                   disabled={createCompletionForm.formState.isSubmitting}
                 >
-                  <ChatBubbleLeftEllipsisIcon className="h-5 w-5 -ml-1 mr-1.5" />
-                  {createCompletionForm.formState.isSubmitting
-                    ? "Loading..."
-                    : "Chat"}
+                  {createCompletionForm.formState.isSubmitting ? (
+                    "Loading..."
+                  ) : (
+                    <PaperAirplaneIcon className="h-5 w-5 -mx-1" />
+                  )}
                 </Button>
               </div>
               {createCompletionForm.formState.errors.message ? (
