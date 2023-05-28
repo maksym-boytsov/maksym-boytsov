@@ -33,11 +33,18 @@ const HeroSection = () => {
             })}
           </div>
 
-          <p className="mx-auto my-3 max-w-xl text-lg text-zinc-200 md:text-zinc-300">
-            Hey, I'm <span className="font-bold">Maksym</span>, a software
-            engineer and entrepreneur. I'm passionate about engineering products
-            that boost productivity and help people achieve their goals.
-          </p>
+          <div className="grid gap-2 max-w-xl text-center mx-auto my-3 text-zinc-200 md:text-zinc-300">
+            <p className="text-lg">
+              Hey, I'm <span className="font-bold">Maksym</span>, a software
+              engineer and entrepreneur.
+            </p>
+            <p>
+              I am dedicated to engineering solutions that elevate{" "}
+              <span className="font-bold">business efficiency</span>, empower
+              organizations to meet their objectives, and drive{" "}
+              <span className="font-bold">productivity enhancement</span>.
+            </p>
+          </div>
 
           {/* @ts-ignore */}
           <Button as="a" href="/#ai" type="button">
