@@ -1,23 +1,18 @@
 "use client";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import React, { useEffect } from "react";
-import fullBodySrc from "public/full-body.jpg";
-// import { hotjar } from "react-hotjar";
+import React from "react";
+import fullBodySrc from "public/maksym-full.jpg";
 
 import { Button } from "../../shared";
 
 const HeroSection = () => {
-  // useEffect(() => {
-  //   hotjar.initialize(3442508, 6);
-  // }, []);
-
   return (
     <section
       id="hero"
       className="relative bg-zinc-900 h-screen grid md:grid-cols-2 grid-flow-col border-b border-zinc-700"
     >
-      <div className="bg-[url('/full-body.jpg')] bg-center bg-cover md:bg-none">
+      <div className="bg-[url('/maksym-full.jpg')] bg-center bg-cover md:bg-none">
         <div className="md:backdrop-filter-none backdrop-blur-sm backdrop-brightness-50 h-screen grid gap-2 px-4 text-center justify-center items-center justify-items-center content-center">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
             {keywords.map((keyword, index) => {
@@ -75,20 +70,19 @@ const HeroSection = () => {
 const keywords = [
   {
     name: "Trust",
-    fromColor: "from-sky-500",
-    viaColor: "via-sky-400",
+    fromColor: "from-teal-500",
+    viaColor: "via-teal-400",
   },
   {
     name: "Precision",
-    fromColor: "from-blue-500",
-    viaColor: "via-blue-400",
+    fromColor: "from-emerald-500",
+    viaColor: "via-emerald-400",
   },
-  { name: "Performance", fromColor: "from-cyan-500", viaColor: "via-cyan-400" },
-  // {
-  //   name: "Responsiveness",
-  //   fromColor: "from-indigo-500",
-  //   viaColor: "via-indigo-400",
-  // },
+  {
+    name: "Performance",
+    fromColor: "from-green-500",
+    viaColor: "via-green-400",
+  },
 ];
 
 export default HeroSection;

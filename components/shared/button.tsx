@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
-export type ButtonColorSchemes = "blue" | "gray";
+export type ButtonColorSchemes = "blue" | "gray" | "green";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   colorScheme?: ButtonColorSchemes;
   as?: React.ElementType;
@@ -9,13 +9,15 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const colorSchemes: Record<ButtonColorSchemes, string> = {
   blue: "bg-blue-300 text-zinc-900 hover:bg-blue-400 focus:ring-blue-400 hover:disabled:bg-blue-400",
+  green:
+    "bg-green-300 text-zinc-900 hover:bg-green-400 focus:ring-green-400 hover:disabled:bg-green-400",
   gray: "bg-gray-300 text-zinc-900 hover:bg-gray-400 focus:ring-gray-400 hover:disabled:bg-gray-400",
 };
 
 export const Button = ({
   as,
   className,
-  colorScheme = "blue",
+  colorScheme = "green",
   ...props
 }: ButtonProps) => {
   const _className = twMerge(
