@@ -250,8 +250,8 @@ const AISection = () => {
                 y2="474.645"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#0284c7" />
-                <stop offset={1} stopColor="#2563eb" />
+                <stop stopColor="#15803d" />
+                <stop offset={1} stopColor="#22c55e" />
               </linearGradient>
             </defs>
           </svg>
