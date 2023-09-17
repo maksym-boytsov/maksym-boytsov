@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { openai } from "../../../lib/openai";
 import rateLimit from "../../../utils/rate-limit";
-import { CreateChatCompletionRequest } from "openai";
 
 const REQ_LIMIT = 5;
 
@@ -39,7 +38,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return message;
     });
 
-    const completionRequest: CreateChatCompletionRequest = {
+    const completionRequest = {
       model: "gpt-3.5-turbo",
       temperature: 0.6,
       messages: [
@@ -51,9 +50,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       ],
     };
 
-    const response = await openai.createChatCompletion(completionRequest);
+    const response = await openai.chat.completions.create(completionRequest);
 
-    return res.status(200).json({ choices: response.data.choices || [] });
+    return res.status(200).json({ choices: response.choices || [] });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Something went wrong" });
