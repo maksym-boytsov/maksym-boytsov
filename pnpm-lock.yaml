@@ -4,7 +4,6 @@ specifiers:
   '@headlessui/react': ^1.7.13
   '@heroicons/react': ^2.0.17
   '@mailchimp/mailchimp_marketing': ^3.0.80
-  '@prisma/client': ^4.12.0
   '@types/node': 18.15.11
   '@types/nodemailer': ^6.4.7
   '@types/react': 18.0.33
@@ -15,7 +14,6 @@ specifiers:
   next: ^13.3.0
   openai: ^3.2.1
   postcss: ^8.4.21
-  prisma: ^4.12.0
   react: ^18.2.0
   react-dom: ^18.2.0
   react-hook-form: ^7.43.9
@@ -29,7 +27,6 @@ dependencies:
   '@headlessui/react': 1.7.13_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 2.0.17_react@18.2.0
   '@mailchimp/mailchimp_marketing': 3.0.80
-  '@prisma/client': 4.12.0_prisma@4.12.0
   '@vercel/analytics': 0.1.11_react@18.2.0
   lru-cache: 8.0.5
   next: 13.3.0_biqbaboplfbrettd7655fr4n2y
@@ -48,7 +45,6 @@ devDependencies:
   autoprefixer: 10.4.14_postcss@8.4.21
   eslint-config-next: 13.3.0_typescript@5.0.4
   postcss: 8.4.21
-  prisma: 4.12.0
   tailwindcss: 3.3.1_postcss@8.4.21
   typescript: 5.0.4
 
@@ -214,28 +210,6 @@ packages:
       tiny-glob: 0.2.9
       tslib: 2.5.0
     dev: true
-
-  /@prisma/client/4.12.0_prisma@4.12.0:
-    resolution: {integrity: sha512-j9/ighfWwux97J2dS15nqhl60tYoH8V0IuSsgZDb6bCFcQD3fXbXmxjYC8GHhIgOk3lB7Pq+8CwElz2MiDpsSg==}
-    engines: {node: '>=14.17'}
-    requiresBuild: true
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-    dependencies:
-      '@prisma/engines-version': 4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7
-      prisma: 4.12.0
-    dev: false
-
-  /@prisma/engines-version/4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7:
-    resolution: {integrity: sha512-JIHNj5jlXb9mcaJwakM0vpgRYJIAurxTUqM0iX0tfEQA5XLZ9ONkIckkhuAKdAzocZ+80GYg7QSsfpjg7OxbOA==}
-    dev: false
-
-  /@prisma/engines/4.12.0:
-    resolution: {integrity: sha512-0alKtnxhNB5hYU+ymESBlGI4b9XrGGSdv7Ud+8TE/fBNOEhIud0XQsAR+TrvUZgS4na5czubiMsODw0TUrgkIA==}
-    requiresBuild: true
 
   /@rushstack/eslint-patch/1.2.0:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
@@ -1806,14 +1780,6 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
-
-  /prisma/4.12.0:
-    resolution: {integrity: sha512-xqVper4mbwl32BWzLpdznHAYvYDWQQWK2tBfXjdUD397XaveRyAP7SkBZ6kFlIg8kKayF4hvuaVtYwXd9BodAg==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      '@prisma/engines': 4.12.0
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}

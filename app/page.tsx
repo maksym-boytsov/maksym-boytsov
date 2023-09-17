@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import AISection from "../components/templates/client/ai-section";
-import NewsletterForm from "../components/templates/client/newsletter-form";
+
 import HeroSection from "../components/templates/client/hero-section";
 
 const title = "Maksym Boytsov";
@@ -58,7 +58,6 @@ export default function HomePage() {
     <main className="text-zinc-100">
       <HeroSection />
       <AISection />
-      <NewsletterForm />
     </main>
   );
 }

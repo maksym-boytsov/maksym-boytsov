@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
         </header>
 
         {children}
-        <footer className="bg-zinc-800 border-t border-zinc-700">
+        <footer className="bg-zinc-900 border-t border-zinc-700">
           <div className="mx-auto max-w-7xl overflow-hidden py-6 px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center space-x-4">
               {social.map((item) => (
