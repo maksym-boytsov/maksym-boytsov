@@ -4,6 +4,10 @@ import rateLimit from "../../../utils/rate-limit";
 
 const REQ_LIMIT = 5;
 
+export const config = {
+  maxDuration: 300,
+};
+
 const limiter = rateLimit({
   interval: 60 * 1000,
   uniqueTokenPerInterval: 500,
