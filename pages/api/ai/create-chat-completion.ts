@@ -43,12 +43,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     const completionRequest = {
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-1106-preview",
       temperature: 0.6,
       messages: [
         {
           role: "system",
-          content: `Today is ${today}. ${process.env.OPENAI_PROMPT}`,
+          content: process.env.OPENAI_PROMPT,
         },
         ...messagesWithPersistantUserInstruction,
       ],
