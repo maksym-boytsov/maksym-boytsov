@@ -14,9 +14,9 @@ import { Button, invalidInputClassName } from "../../shared";
 import Image from "next/image";
 
 const COMMON_PHRASES = [
+  "How old are you?",
   "Where did you study?",
   "What are your skills?",
-  "How old are you?",
 ];
 
 type Completion = {
