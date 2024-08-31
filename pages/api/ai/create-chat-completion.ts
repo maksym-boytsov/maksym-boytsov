@@ -42,8 +42,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return message;
     });
 
-    const completionRequest = {
-      model: "gpt-4-1106-preview",
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-2024-08-06",
       temperature: 0.6,
       messages: [
         {
@@ -52,9 +52,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         },
         ...messagesWithPersistantUserInstruction,
       ],
-    };
-
-    const response = await openai.chat.completions.create(completionRequest);
+    });
 
     return res.status(200).json({ choices: response.choices || [] });
   } catch (error) {
