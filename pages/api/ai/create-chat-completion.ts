@@ -48,7 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       messages: [
         {
           role: "system",
-          content: process.env.OPENAI_PROMPT,
+          content: `Today is: ${today}. ${process.env.OPENAI_PROMPT}`,
         },
         ...messagesWithPersistantUserInstruction,
       ],
