@@ -1,10 +1,7 @@
 # Nice meeting you! 🫂
 
-I am Max - Entrepreneur and Software Engineer
+I'm Maksym - Entrepreneur and Software Engineer focused on making this world better with technologies around **AI, Web3 and Web Engineering as a whole** - currently based in [Warsaw, Poland](https://goo.gl/maps/UXpH9vzJrqujfj2M9)
 
-Focused on **AI, Web3 and Web Engineering as a whole** - currently based in [Warsaw, Poland](https://goo.gl/maps/UXpH9vzJrqujfj2M9)
-
-- 💡 Helping people to validate their business ideas and build business plans with [Beaseness](https://beaseness.com/)
 - 🔨 Building world-class products for startups & enterprises
 - 🚀 Familiar with & using a lot of different technologies due to my experience in different industries
 - 👨‍💻 TypeScript enthusiast
@@ -14,7 +11,7 @@ Focused on **AI, Web3 and Web Engineering as a whole** - currently based in [War
 
 📫 You can reach me via:
 
-- [Twitter](https://twitter.com/maksym_boytsov)
+- [X Platform](https://x.com/maksym_boytsov)
 - [LinkedIn](https://www.linkedin.com/in/maksym-boytsov/)
 - [Email](mailto:maksym.boytsov@gmail.com?subject=[GitHub])
 
