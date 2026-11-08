@@ -1,33 +1,43 @@
 {
+  "name": "maksym-page",
+  "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
-    "@heroicons/react": "^2.0.18",
-    "@mailchimp/mailchimp_marketing": "^3.0.80",
-    "@vercel/analytics": "^1.1.1",
-    "lru-cache": "^10.0.1",
-    "next": "^13.5.6",
-    "openai": "^4.57.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.48.2",
-    "react-icons": "^4.11.0",
-    "tailwind-merge": "^2.0.0"
+    "@anthropic-ai/sdk": "^1.5.0",
+    "@vercel/analytics": "^2.0.1",
+    "next": "^16.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "resend": "^6.37.0",
+    "server-only": "^0.0.1",
+    "simplex-noise": "^4.0.3",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@types/node": "20.9.0",
-    "@types/nodemailer": "^6.4.14",
-    "@types/react": "18.2.37",
-    "autoprefixer": "^10.4.16",
-    "eslint-config-next": "^14.0.1",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.5",
-    "typescript": "5.2.2"
+    "@fontsource/inter-tight": "^5.3.0",
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/postcss": "^4.3.4",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^10.14.0",
+    "eslint-config-next": "^16.4.5",
+    "tailwindcss": "^4.3.4",
+    "typescript": "~6.0.3",
+    "vitest": "^5.1.0"
   },
-  "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.16.1+sha512.091d1dee7927575661b25dab3c2ae31cafc1c54d6b71ed6a6600cf0c1cb10434a447eae14015f1b23e2e6bedeed79df94a932e2164d2832280dce3fb32f656d1"
 }

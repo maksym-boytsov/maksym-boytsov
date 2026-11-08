@@ -1,63 +1,90 @@
-import { Metadata } from "next";
-
-import AISection from "../components/templates/client/ai-section";
-
-import HeroSection from "../components/templates/client/hero-section";
-
-const title = "Maksym Boytsov";
-const description =
-  "Welcome to Maksym Boytsov's personal website! As a full-stack software engineer and entrepreneur, I'm passionate about building innovative solutions that make a difference. Let's connect and bring ideas to life.";
-const canonical = "https://www.maksym.page/";
-const fullName = "Maksym Boytsov";
-const image = "https://avatars.githubusercontent.com/u/32408893?v=4";
+import type { Metadata } from "next";
+import { IntroWriter } from "@/components/chat/intro-writer";
+import { MadeForYou } from "@/components/art/made-for-you";
+import { SocialLinks } from "@/components/site/social-links";
+import { CREDIT, LINKS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical },
-  applicationName: "Maksym Boytsov",
-  colorScheme: "dark",
-  authors: {
-    url: "https://www.maksym.page/",
-    name: fullName,
-  },
-  generator: "Next.js",
-  keywords: [
-    "Maksym Boytsov",
-    "Maksym",
-    "Boytsov",
-    "Software Engineer",
-    "Full Stack",
-    "Entrepreneur",
-    "Web3",
-    "AI",
-    "Crypto",
-    "Blockchain",
-  ],
-  themeColor: "#18181b",
-  creator: fullName,
-  robots: "index, follow",
-  openGraph: {
-    title,
-    description,
-    type: "profile",
-    locale: "en_US",
-    images: image,
-    url: canonical,
-  },
-  twitter: {
-    title,
-    description,
-    images: image,
-    card: "summary",
-  },
+  alternates: { canonical: "/" },
 };
 
-export default function HomePage() {
+const NOW = [
+  { label: "Thinking about", text: "AI, security, crypto, and how technologies are evolving" },
+  { label: "Training", text: "Gym three times a week, plus the occasional cardio" },
+  { label: "Open to", text: "Opportunities that can change the world. You never know" },
+];
+
+const PERSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE_NAME,
+  url: SITE_URL,
+  jobTitle: "Head of Engineering",
+  worksFor: { "@type": "Organization", name: "ChainPatrol", url: "https://chainpatrol.com" },
+  address: { "@type": "PostalAddress", addressLocality: "Warsaw", addressCountry: "PL" },
+  description: SITE_DESCRIPTION,
+  sameAs: [LINKS.x, LINKS.linkedin, LINKS.github],
+};
+
+export default function Home() {
   return (
-    <main className="text-zinc-100">
-      <HeroSection />
-      <AISection />
-    </main>
+    <div className="paper">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_LD).replace(/</g, "\\u003c") }}
+      />
+      <header className="p-wrap p-top">
+        <h1 className="p-brand">Maksym Boytsov</h1>
+        <nav aria-label="Elsewhere">
+          <SocialLinks />
+        </nav>
+      </header>
+
+      <main>
+        <div className="p-wrap">
+          {/* The drawing made for this visitor is the hero; the name lives in the header. */}
+          <section className="p-hero" aria-label="Made for you today">
+            <MadeForYou />
+            <div className="p-hero-text">
+              <p className="p-intro">
+                I&apos;m Maksym, and I lead engineering at ChainPatrol.
+                <br />
+                I wanted this page to give you something, not just tell you about me.
+              </p>
+              <p className="p-meta">Head of Engineering · Warsaw</p>
+            </div>
+          </section>
+
+          <section className="p-section" aria-labelledby="now-title">
+            <h2 className="p-label" id="now-title">
+              Right now
+            </h2>
+            <div className="p-now">
+              {NOW.map((cell) => (
+                <div key={cell.label}>
+                  <span>{cell.label}</span>
+                  <p>{cell.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        {/* Full-width ink band: the note writer reads as its own room, not part of the footer. */}
+        <section className="ask-room" aria-labelledby="chat-title">
+          <div className="p-wrap">
+            <IntroWriter />
+          </div>
+        </section>
+      </main>
+
+      <footer className="p-wrap p-footer">
+        <p className="p-credit">{CREDIT}</p>
+        <nav className="p-footer-links" aria-label="Elsewhere, footer">
+          <SocialLinks />
+          <a href={LINKS.email}>Email</a>
+        </nav>
+      </footer>
+    </div>
   );
 }

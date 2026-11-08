@@ -1,0 +1,2 @@
+minimumReleaseAgeExclude:
+  - '@anthropic-ai/sdk@1.5.0'

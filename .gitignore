@@ -32,3 +32,19 @@ yarn-error.log*
 
 # Vercel
 .vercel
+
+# brainstorming mockups
+.superpowers/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Private local files (photos with location data, never served)
+/private/

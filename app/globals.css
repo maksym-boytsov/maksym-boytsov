@@ -1,0 +1,616 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter-tight), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-paper: #f1eee7;
+  --color-paper-lift: #f8f6f1;
+  --color-ink: #121212;
+  --color-ink-soft: #2b2925;
+  --color-stone: #6d685e;
+  --color-pebble: #8d877a;
+  --color-rule: #c9c3b6;
+  --color-forest: #1f5135;
+
+  /* Dark room (the chat band) */
+  --color-coal: #24231f;
+  --color-ash: #3a3936;
+  --color-dust: #9c968a;
+  --color-chalk: #ddd8cc;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: inherit;
+    font-family: var(--font-sans);
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--color-forest);
+    color: var(--color-paper);
+  }
+}
+
+@layer components {
+  .paper {
+    min-height: 100svh;
+    overflow-x: clip;
+  }
+  .p-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ------------------------------- header ------------------------------- */
+  .p-top {
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-stone);
+  }
+  .p-top nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px 16px;
+  }
+  .p-top a {
+    transition: color 0.2s;
+  }
+  .p-top a:hover {
+    color: var(--color-ink);
+  }
+
+  .p-brand {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  /* -------------------------------- hero -------------------------------- */
+  /* The visitor's drawing, centred, with the intro underneath. */
+  .p-hero {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    margin-top: 36px;
+  }
+  .p-hero-text {
+    margin-top: 72px;
+    display: grid;
+    justify-items: center;
+  }
+  .p-hero-text .p-intro {
+    margin-top: 0;
+  }
+  .p-hero .p-meta,
+  .p-hero .art-actions {
+    justify-content: center;
+  }
+  .p-intro {
+    margin-top: 30px;
+    font-size: clamp(18px, 1.7vw, 22px);
+    line-height: 1.5;
+    max-width: 560px;
+    color: var(--color-ink-soft);
+  }
+  .p-meta {
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-stone);
+    display: flex;
+    gap: 6px 18px;
+    flex-wrap: wrap;
+  }
+  /* The drawing made for each visitor, in place of a photo. */
+  .art {
+    /* As large as fits on the first screen, caption included. */
+    width: min(100%, calc((100svh - 190px) * 0.8));
+  }
+  .art-frame {
+    border-radius: 3px;
+    background: var(--color-paper);
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.04),
+      0 30px 60px -36px rgba(18, 18, 18, 0.45);
+  }
+  .art-frame canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    border-radius: 3px;
+  }
+  .art-cap {
+    margin-top: 16px;
+    min-height: 1.6em;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+  .art-cap b {
+    font-weight: 500;
+    color: var(--color-forest);
+  }
+  .art-actions {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-stone);
+  }
+  .art-actions button {
+    cursor: pointer;
+    color: var(--color-ink);
+    border-bottom: 1px solid var(--color-rule);
+    padding-bottom: 1px;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .art-actions button:hover:not(:disabled) {
+    color: var(--color-forest);
+    border-color: var(--color-forest);
+  }
+  .art-actions button:disabled {
+    color: var(--color-pebble);
+    cursor: default;
+  }
+  .art-note {
+    color: var(--color-pebble);
+  }
+
+  /* ------------------------------ sections ------------------------------ */
+  /* Each section reads as its own chapter, with real air between them. */
+  .p-section {
+    margin-top: clamp(140px, 22vh, 260px);
+  }
+  .p-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin-bottom: 32px;
+  }
+
+  /* ------------------------------ right now ----------------------------- */
+  .p-now {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-ink);
+    border: 1px solid var(--color-ink);
+  }
+  .p-now div {
+    background: var(--color-paper);
+    padding: 28px 26px 34px;
+    min-height: 180px;
+  }
+  .p-now span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin-bottom: 18px;
+  }
+  .p-now p {
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  /* ------------------------------- footer ------------------------------- */
+  .p-footer {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+  .p-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-stone);
+  }
+  .p-footer-links a {
+    transition: color 0.2s;
+  }
+  .p-footer-links a:hover {
+    color: var(--color-ink);
+  }
+  .p-credit {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-pebble);
+  }
+
+  /* --------------------------------- 404 -------------------------------- */
+  .p-lost {
+    min-height: 100svh;
+    padding-top: 18vh;
+  }
+  .p-lost h1 {
+    font-weight: 250;
+    font-size: clamp(56px, 9vw, 140px);
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+  }
+  .p-back {
+    display: inline-block;
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-forest);
+  }
+  .p-back:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ---------------------------- chat: dark room ---------------------------- */
+  .ask-room {
+    margin-top: clamp(140px, 22vh, 260px);
+    padding: clamp(90px, 16vh, 180px) 0;
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .ask-room :focus-visible {
+    outline-color: var(--color-paper);
+  }
+  .ask-room ::selection {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  /* A centred invitation; the form opens beneath it on request. */
+  .chat {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+  .chat-intro .chat-sub {
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .intro-cta {
+    margin-top: 36px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .intro-cta:hover {
+    background: #ffffff;
+  }
+  .intro-form {
+    width: min(100%, 640px);
+    text-align: left;
+    animation: intro-in 0.3s ease;
+  }
+  .intro-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .chat-kicker {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-dust);
+  }
+  .chat-intro h2 {
+    margin-top: 22px;
+    font-weight: 500;
+    font-size: clamp(48px, 6.4vw, 104px);
+    letter-spacing: -0.055em;
+    line-height: 0.95;
+  }
+  .chat-sub {
+    margin-top: 22px;
+    max-width: 380px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-chalk);
+  }
+  /* The note writer: a soft-edged text box on ink, then the draft and the ways to send it. */
+  .intro-label {
+    display: block;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-dust);
+  }
+  .intro-text {
+    display: block;
+    width: 100%;
+    resize: vertical;
+    min-height: 132px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--color-ash);
+    background: var(--color-coal);
+    color: var(--color-paper);
+    caret-color: var(--color-paper);
+    font: inherit;
+    font-size: clamp(17px, 1.5vw, 20px);
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .intro-text:hover {
+    border-color: var(--color-dust);
+  }
+  .intro-text:focus {
+    border-color: var(--color-chalk);
+  }
+  .intro-text::placeholder {
+    color: var(--color-pebble);
+  }
+  .intro-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .intro-email {
+    margin-top: 18px;
+  }
+  .intro-input {
+    min-height: 0;
+    resize: none;
+    padding: 12px 16px;
+  }
+  /* The spam trap: present for bots, invisible and unreachable for people. */
+  .intro-trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .intro-actions .intro-primary:disabled,
+  .intro-actions button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .intro-actions button:disabled:hover {
+    border-color: var(--color-ash);
+    color: var(--color-chalk);
+  }
+  .intro-sent-title {
+    font-size: clamp(24px, 2.4vw, 32px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    /* Tight line box, so the visible gap matches the one below it. */
+    line-height: 1.1;
+  }
+  /* Heading, line and links stacked with one equal gap between each. */
+  .intro-sent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+  }
+  .intro-sent > * {
+    margin: 0;
+  }
+  .intro-sent .chat-sub {
+    max-width: none;
+    line-height: 1.3;
+  }
+  .intro-sent .intro-links {
+    justify-content: center;
+  }
+  .intro-row {
+    min-height: 40px;
+    animation: intro-in 0.25s ease;
+  }
+  .intro-links {
+    display: flex;
+    gap: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .intro-links a {
+    color: var(--color-chalk);
+    border-bottom: 1px solid var(--color-ash);
+    padding-bottom: 1px;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .intro-links button {
+    cursor: pointer;
+  }
+  .intro-links a,
+  .intro-links button {
+    color: var(--color-chalk);
+    border-bottom: 1px solid var(--color-ash);
+    padding-bottom: 1px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .intro-links a:hover,
+  .intro-links button:hover:not(:disabled) {
+    color: var(--color-paper);
+    border-color: var(--color-paper);
+  }
+  .intro-links button:disabled {
+    color: var(--color-pebble);
+    cursor: default;
+  }
+  .intro-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-pebble);
+  }
+  .chat-send {
+    padding: 8px 0 8px 10px;
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .chat-send span {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 0.25s;
+  }
+  .chat-send:hover:not(:disabled) span {
+    transform: translateX(3px);
+  }
+  .chat-send:disabled {
+    color: var(--color-ash);
+    cursor: default;
+  }
+  .chat-notice,
+  .intro-status {
+    min-height: 1.5em;
+    margin-top: 12px;
+    font-size: 15px;
+    color: var(--color-chalk);
+  }
+  .intro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .intro-actions a,
+  .intro-actions button {
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--color-ash);
+    color: var(--color-chalk);
+    font-size: 15px;
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      background 0.2s,
+      color 0.2s;
+  }
+  .intro-actions a:hover,
+  .intro-actions button:hover {
+    border-color: var(--color-paper);
+    color: var(--color-paper);
+  }
+  .intro-actions .intro-primary {
+    background: var(--color-paper);
+    border-color: var(--color-paper);
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+  .intro-actions .intro-primary:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: var(--color-ink);
+  }
+
+  /* ------------------------------- smaller ------------------------------ */
+  @media (max-width: 860px) {
+    .p-wrap {
+      padding: 0 16px;
+    }
+    .p-top {
+      padding-top: 18px;
+    }
+    .p-footer {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+    .ask-room {
+      margin-top: 120px;
+      padding: 80px 0;
+    }
+    .p-hero {
+      margin-top: 24px;
+    }
+    .art {
+      width: min(100%, 420px);
+    }
+    .p-hero-text {
+      margin-top: 56px;
+    }
+    .p-section {
+      margin-top: 120px;
+    }
+    .p-now {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .p-now {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@keyframes intro-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
