@@ -46,7 +46,7 @@ test.describe("made for you", () => {
     await page.goto("/");
     const art = page.getByTestId("art");
     await expect(art).toHaveAttribute("data-ready", "", { timeout: 8000 });
-    await expect(page.getByTestId("art-caption")).toHaveText(/^No\. \d{4} · (Currents|Eddies|Contours|Rings|Frames|Mesh|Harmonograph|Spirograph) · Made for you today$/);
+    await expect(page.getByTestId("art-caption")).toHaveText(/^No\. \d{4} · (Currents|Contours|Rings|Frames|Mesh|Harmonograph|Spirograph) · Made for you today$/);
     // Something was actually drawn: the canvas isn't a single flat colour.
     const distinct = await art.evaluate((c: HTMLCanvasElement) => {
       const d = c.getContext("2d")!.getImageData(0, 0, c.width, c.height).data;
@@ -93,11 +93,11 @@ test.describe("made for you", () => {
     const caption = page.getByTestId("art-caption");
     await expect(caption).toHaveText(/^No\./);
     await expect(page.getByTestId("art")).toHaveAttribute("data-ready", "", { timeout: 8000 });
-    const no = (await caption.textContent())!.match(/No\. (\d{4})/)![1];
+    const [, no, style] = (await caption.textContent())!.match(/No\. (\d{4}) · (\w+)/)!;
     const download = page.waitForEvent("download");
     await page.getByRole("button", { name: /Download/ }).click();
     const file = await download;
-    expect(file.suggestedFilename()).toBe(`maksym-page-no-${no}.png`);
+    expect(file.suggestedFilename()).toBe(`${style.toLowerCase()}-${no}.png`);
     // The download is drawn from the same seed and strokes as the screen, just scaled.
     // Check it's full-size and actually has a drawing in it.
     const path = await file.path();

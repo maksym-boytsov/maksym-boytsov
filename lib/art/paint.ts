@@ -1,13 +1,15 @@
+import { COLORS } from "@/lib/site";
 import type { Artwork } from "./generate";
 import { rngFor } from "./random";
 
-export const PAPER = "#f1eee7";
-const INK = "18,18,18";
-const FOREST = "31,81,53";
+/** "r,g,b" for a #rrggbb colour, so strokes can carry their own opacity. */
+const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(",");
+const INK = rgb(COLORS.ink);
+const FOREST = rgb(COLORS.forest);
 
 /** Paper colour plus a faint, seeded grain. */
 export function paintPaper(ctx: CanvasRenderingContext2D, W: number, H: number, seed: string) {
-  ctx.fillStyle = PAPER;
+  ctx.fillStyle = COLORS.paper;
   ctx.fillRect(0, 0, W, H);
   const r = rngFor(`${seed}:grain`);
   const count = Math.floor((W * H) / 55);

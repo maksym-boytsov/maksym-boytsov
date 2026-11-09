@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { FAMILIES, INSET } from "@/lib/art/families";
-import { generate } from "@/lib/art/generate";
+import { familyFor, generate } from "@/lib/art/generate";
 import { rngFor } from "@/lib/art/random";
 import { edition, makeSeed, parseSeed } from "@/lib/art/seed";
 
@@ -60,11 +60,11 @@ describe("generate", () => {
     }
   });
 
-  it("spreads seeds across all eight families", () => {
+  it("spreads seeds across all seven styles", () => {
     const seen = new Set<string>();
     for (let i = 0; i < 80; i++) seen.add(generate(`spread-${i}`, 120, 150).family.key);
     expect(seen.size).toBe(FAMILIES.length);
-    expect(FAMILIES.map((f) => f.key)).toEqual(["currents", "eddies", "contours", "rings", "frames", "mesh", "harmonograph", "spirograph"]);
+    expect(FAMILIES.map((f) => f.key)).toEqual(["currents", "contours", "rings", "frames", "mesh", "harmonograph", "spirograph"]);
   });
 });
 
@@ -79,5 +79,34 @@ describe("seeds", () => {
 
   it("formats the caption parts", () => {
     expect(edition("anything")).toMatch(/^\d{4}$/);
+  });
+});
+
+describe("style rotation", () => {
+  const days = (from: string, count: number) =>
+    Array.from({ length: count }, (_, i) => new Date(Date.parse(`${from}T00:00:00Z`) + i * 86_400_000).toISOString().slice(0, 10));
+
+  it("shows a visitor every style once each Monday-to-Sunday week, never the same two days running", () => {
+    expect(FAMILIES).toHaveLength(7);
+    for (const browser of ["a", "b", "c", "d", "e", "f"]) {
+      for (const zone of ["Europe/Warsaw", "America/New_York"]) {
+        // 2026-01-05 is a Monday; 57 full weeks from there.
+        const dates = days("2026-01-05", 7 * 57);
+        const styles = dates.map((d) => familyFor(makeSeed(d, zone, browser)).key);
+        for (let i = 1; i < styles.length; i++) expect(styles[i]).not.toBe(styles[i - 1]);
+        for (let w = 0; w < styles.length; w += 7) expect(new Set(styles.slice(w, w + 7)).size).toBe(7);
+      }
+    }
+  });
+
+  it("gives different visitors different orders", () => {
+    const week = days("2026-11-02", 7);
+    const order = (browser: string) => week.map((d) => familyFor(makeSeed(d, "Europe/Warsaw", browser)).key).join();
+    expect(new Set(["a", "b", "c", "d", "e"].map(order)).size).toBeGreaterThan(1);
+  });
+
+  it("keeps the style of a shared link", () => {
+    const seed = makeSeed("2026-11-09", "Europe/Warsaw", "browser");
+    expect(generate(seed, W, H).family).toBe(familyFor(seed));
   });
 });

@@ -6,12 +6,12 @@ const mocks = vi.hoisted(() => ({
   checkSendLimit: vi.fn<(key: string) => { ok: true } | { ok: false; retryAfterSeconds: number }>(() => ({ ok: true })),
 }));
 
-vi.mock("@/lib/chat/mail", () => ({
+vi.mock("@/lib/contact/mail", () => ({
   getResend: () => (mocks.hasResend() ? { emails: { send: mocks.send } } : null),
   mailFrom: () => "maksym.page <onboarding@resend.dev>",
   mailTo: () => "maksym.boytsov@gmail.com",
 }));
-vi.mock("@/lib/chat/guard", () => ({ checkSendLimit: mocks.checkSendLimit }));
+vi.mock("@/lib/contact/guard", () => ({ checkSendLimit: mocks.checkSendLimit }));
 
 const { GET, POST } = await import("@/app/api/message/route");
 

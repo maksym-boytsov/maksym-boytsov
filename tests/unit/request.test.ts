@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clientKey, isAllowedOrigin, readBodyCapped } from "@/lib/chat/request";
+import { clientKey, isAllowedOrigin, readBodyCapped } from "@/lib/contact/request";
 
 describe("isAllowedOrigin", () => {
   const prod = { NODE_ENV: "production" };

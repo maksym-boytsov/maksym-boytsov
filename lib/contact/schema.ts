@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { MAX_ABOUT_CHARS, MIN_ABOUT_CHARS } from "./config";
+import { MAX_EMAIL_CHARS, MAX_MESSAGE_CHARS, MIN_MESSAGE_CHARS, MIN_WORDING_CHARS } from "./config";
 
 const requestSchema = z.object({ about: z.string() }).strict();
 
@@ -10,7 +10,7 @@ export function parseIntroRequest(input: unknown): ParseResult {
   const result = requestSchema.safeParse(input);
   if (!result.success) return { ok: false };
   const about = result.data.about.trim();
-  if (about.length < MIN_ABOUT_CHARS || about.length > MAX_ABOUT_CHARS) return { ok: false };
+  if (about.length < MIN_WORDING_CHARS || about.length > MAX_MESSAGE_CHARS) return { ok: false };
   return { ok: true, about };
 }
 
@@ -36,7 +36,7 @@ export function parseMessageRequest(input: unknown): MessageParse {
   if (!result.success) return { ok: false };
   const email = (result.data.email ?? "").trim() || null;
   const message = result.data.message.trim();
-  if (email !== null && (email.length > 254 || !z.email().safeParse(email).success)) return { ok: false };
-  if (message.length < 2 || message.length > MAX_ABOUT_CHARS) return { ok: false };
+  if (email !== null && (email.length > MAX_EMAIL_CHARS || !z.email().safeParse(email).success)) return { ok: false };
+  if (message.length < MIN_MESSAGE_CHARS || message.length > MAX_MESSAGE_CHARS) return { ok: false };
   return { ok: true, email, message, bot: Boolean(result.data.website) };
 }

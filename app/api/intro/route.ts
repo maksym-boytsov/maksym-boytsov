@@ -1,44 +1,29 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { getAnthropic } from "@/lib/chat/anthropic";
-import { INTRO_MODEL, MAX_BODY_BYTES, MAX_NOTE_CHARS, MAX_OUTPUT_TOKENS } from "@/lib/chat/config";
-import { checkRateLimit, dailyBudgetMicroUsd, recordSpend, spentTodayMicroUsd } from "@/lib/chat/guard";
-import type { IntroErrorCode } from "@/lib/chat/notices";
-import { usageCostMicroUsd } from "@/lib/chat/pricing";
-import { INTRO_SYSTEM, NO_NOTE } from "@/lib/chat/prompt";
-import { clientKey, isAllowedOrigin, readBodyCapped } from "@/lib/chat/request";
-import { parseIntroRequest } from "@/lib/chat/schema";
+import { getAnthropic } from "@/lib/contact/anthropic";
+import { INTRO_MODEL, MAX_BODY_BYTES, MAX_MESSAGE_CHARS, MAX_OUTPUT_TOKENS } from "@/lib/contact/config";
+import { checkRateLimit, dailyBudgetMicroUsd, recordSpend, spentTodayMicroUsd } from "@/lib/contact/guard";
+import type { IntroErrorCode } from "@/lib/contact/notices";
+import { usageCostMicroUsd } from "@/lib/contact/pricing";
+import { INTRO_SYSTEM, NO_NOTE } from "@/lib/contact/prompt";
+import { NO_STORE, clientKey, isAllowedOrigin, jsonError, logger, readJson } from "@/lib/contact/request";
+import { parseIntroRequest } from "@/lib/contact/schema";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
-const NO_STORE = { "Cache-Control": "no-store" };
-
-function fail(code: IntroErrorCode, status: number, headers: Record<string, string> = {}): Response {
-  return Response.json({ error: code }, { status, headers: { ...NO_STORE, ...headers } });
-}
-
+const fail = (code: IntroErrorCode, status: number, headers?: Record<string, string>) => jsonError(code, status, headers);
 /** Counts, status codes and token usage only. Never what visitors wrote. */
-function log(entry: Record<string, unknown>) {
-  console.info(JSON.stringify({ scope: "intro", ...entry }));
-}
+const log = logger("intro");
 
 /**
- * Turns a visitor's few lines about themselves into a short first message to
- * Maksym, which they can edit and send by email, X or LinkedIn. Nothing is stored.
+ * Rewords a visitor's message in their own voice, keeping what they meant. They
+ * can edit it, undo it, and send it however they like. Nothing is stored.
  */
 export async function POST(req: Request): Promise<Response> {
   if (!isAllowedOrigin(req.headers.get("origin"))) return fail("forbidden", 403);
 
-  const raw = await readBodyCapped(req, MAX_BODY_BYTES);
-  if (raw === null) return fail("bad_request", 400);
-  let body: unknown;
-  try {
-    body = JSON.parse(raw);
-  } catch {
-    return fail("bad_request", 400);
-  }
-  const parsed = parseIntroRequest(body);
+  const parsed = parseIntroRequest(await readJson(req, MAX_BODY_BYTES));
   if (!parsed.ok) return fail("bad_request", 400);
 
   const client = getAnthropic();
@@ -82,8 +67,8 @@ export async function POST(req: Request): Promise<Response> {
       .map((block) => (block.type === "text" ? block.text : ""))
       .join("")
       .trim();
-    if (!text || text === NO_NOTE || text.includes(NO_NOTE)) return fail("unclear", 422);
-    return Response.json({ note: text.slice(0, MAX_NOTE_CHARS).trim() }, { headers: NO_STORE });
+    if (!text || text.includes(NO_NOTE)) return fail("unclear", 422);
+    return Response.json({ note: text.slice(0, MAX_MESSAGE_CHARS).trim() }, { headers: NO_STORE });
   } catch (err) {
     if (err instanceof Anthropic.RateLimitError) {
       log({ event: "upstream_rate_limited", status: 429 });

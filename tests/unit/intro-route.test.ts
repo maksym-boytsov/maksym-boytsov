@@ -10,10 +10,10 @@ const mocks = vi.hoisted(() => ({
   dailyBudgetMicroUsd: vi.fn(() => 3_000_000),
 }));
 
-vi.mock("@/lib/chat/anthropic", () => ({
+vi.mock("@/lib/contact/anthropic", () => ({
   getAnthropic: () => (mocks.hasClient() ? { beta: { messages: { create: mocks.create } } } : null),
 }));
-vi.mock("@/lib/chat/guard", () => ({
+vi.mock("@/lib/contact/guard", () => ({
   checkRateLimit: mocks.checkRateLimit,
   spentTodayMicroUsd: mocks.spentTodayMicroUsd,
   recordSpend: mocks.recordSpend,

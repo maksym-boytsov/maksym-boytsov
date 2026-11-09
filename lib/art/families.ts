@@ -127,36 +127,6 @@ export const FAMILIES: readonly Family[] = [
     },
   },
   {
-    key: "eddies",
-    name: "Eddies",
-    ink: [4.41, 6.25],
-    make(rng, W, H, u, m) {
-      const vortices = Array.from({ length: 3 + Math.floor(rng() * 4) }, () => ({
-        x: m + rng() * (W - 2 * m),
-        y: m + rng() * (H - 2 * m),
-        s: (rng() < 0.5 ? -1 : 1) * (0.6 + rng()),
-      }));
-      const drift = rng() * TAU;
-      const angle = (x: number, y: number) => {
-        let vx = Math.cos(drift) * 0.35;
-        let vy = Math.sin(drift) * 0.35;
-        for (const v of vortices) {
-          const dx = (x - v.x) / u;
-          const dy = (y - v.y) / u;
-          const r2 = dx * dx + dy * dy + 0.004;
-          vx += ((v.s * -dy) / r2) * 0.22;
-          vy += ((v.s * dx) / r2) * 0.22;
-        }
-        return Math.atan2(vy, vx);
-      };
-      return streamlines({
-        rng, W, H, m, angle,
-        sep: 0.015 * u, step: 0.0035 * u, maxSteps: 1400, minSteps: 30, attempts: 3000,
-        width: 0.0015 * u, accent: 0.02,
-      });
-    },
-  },
-  {
     key: "contours",
     name: "Contours",
     ink: [2.96, 5.68],
@@ -177,8 +147,17 @@ export const FAMILIES: readonly Family[] = [
       const levels = 26;
       const highlight = Math.floor(rng() * levels);
       const out: Stroke[] = [];
+      // Where level t crosses the cell edge from (x1, y1) to (x2, y2), if it does.
+      const P: Point[] = [];
+      let t = 0;
+      const edge = (p: number, q: number, x1: number, y1: number, x2: number, y2: number) => {
+        if (p < t !== q < t) {
+          const k = (t - p) / (q - p);
+          P.push([m + (x1 + (x2 - x1) * k) * res, m + (y1 + (y2 - y1) * k) * res]);
+        }
+      };
       for (let l = 0; l < levels; l++) {
-        const t = -1 + (2 * (l + 0.5)) / levels;
+        t = -1 + (2 * (l + 0.5)) / levels;
         const hi = l === highlight;
         const w = (l % 5 === 0 ? 0.0024 : 0.0012) * u;
         // Marching squares: one or two segments per cell where the level crosses it.
@@ -188,13 +167,7 @@ export const FAMILIES: readonly Family[] = [
             const b = v[j * (cols + 1) + i + 1];
             const c = v[(j + 1) * (cols + 1) + i + 1];
             const d = v[(j + 1) * (cols + 1) + i];
-            const P: Point[] = [];
-            const edge = (p: number, q: number, x1: number, y1: number, x2: number, y2: number) => {
-              if (p < t !== q < t) {
-                const k = (t - p) / (q - p);
-                P.push([m + (x1 + (x2 - x1) * k) * res, m + (y1 + (y2 - y1) * k) * res]);
-              }
-            };
+            P.length = 0;
             edge(a, b, i, j, i + 1, j);
             edge(b, c, i + 1, j, i + 1, j + 1);
             edge(d, c, i, j + 1, i + 1, j + 1);

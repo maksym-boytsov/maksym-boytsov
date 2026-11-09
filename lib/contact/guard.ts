@@ -17,13 +17,13 @@ interface Window {
 /** Across all visitors: stops floods even when they come from many addresses. */
 export const SITE_LIMIT: Window = { limit: 30, ms: 60_000 };
 /** Per visitor: 8 requests per 10 minutes and 40 per day. */
-export const VISITOR_LIMITS: readonly Window[] = [
+const VISITOR_LIMITS: readonly Window[] = [
   { limit: 8, ms: 10 * 60_000 },
   { limit: 40, ms: 24 * 60 * 60_000 },
 ];
 /** Sending real email is stricter: 3 per visitor per hour, 6 per day, and 40 a day for the whole site. */
-export const SEND_SITE_LIMIT: Window = { limit: 40, ms: 24 * 60 * 60_000 };
-export const SEND_VISITOR_LIMITS: readonly Window[] = [
+const SEND_SITE_LIMIT: Window = { limit: 40, ms: 24 * 60 * 60_000 };
+const SEND_VISITOR_LIMITS: readonly Window[] = [
   { limit: 3, ms: 60 * 60_000 },
   { limit: 6, ms: 24 * 60 * 60_000 },
 ];

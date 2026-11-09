@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { generate } from "@/lib/art/generate";
+import type { Stroke } from "@/lib/art/families";
+import { familyFor, generate } from "@/lib/art/generate";
 import { orderedStrokes, paintPaper, paintStrokes } from "@/lib/art/paint";
 import { edition, makeSeed, parseSeed } from "@/lib/art/seed";
 
@@ -10,22 +11,11 @@ const H = 1300;
 const DRAW_MS = 2600;
 const DOWNLOAD_W = 2400;
 
-interface Info {
-  seed: string;
-  mine: boolean;
-  edition: string;
-  family: string;
-}
-
 function mySeed(): string {
   const day = new Date().toLocaleDateString("en-CA"); // the visitor's local date, YYYY-MM-DD
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
   const browser = [navigator.userAgent, navigator.language, screen.width, screen.height, devicePixelRatio].join("|");
   return makeSeed(day, timeZone, browser);
-}
-
-function infoFor(seed: string, mine: boolean, family: string): Info {
-  return { seed, mine, family, edition: edition(seed) };
 }
 
 /**
@@ -35,15 +25,24 @@ function infoFor(seed: string, mine: boolean, family: string): Info {
  */
 export function MadeForYou() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [info, setInfo] = useState<Info | null>(null);
+  /** The strokes on screen, kept so the download is the same piece without generating it again. */
+  const strokesRef = useRef<Stroke[]>([]);
   const [copied, setCopied] = useState(false);
-  const [seed, setSeed] = useState<string | null>(null);
+  // Picked after mount: it depends on the visitor's browser. `own` is this visitor's seed for today.
+  const [state, setState] = useState<{ seed: string; own: string } | null>(null);
+  const seed = state?.seed ?? null;
+  const info = state && {
+    seed: state.seed,
+    mine: state.seed === state.own,
+    edition: edition(state.seed),
+    family: familyFor(state.seed),
+  };
 
-  // Pick the seed after mount: it depends on the visitor's browser.
   useEffect(() => {
     const raf = requestAnimationFrame(() => {
+      const own = mySeed();
       const shared = new URLSearchParams(window.location.search).get("art");
-      setSeed(parseSeed(shared) ? shared : mySeed());
+      setState({ seed: shared && parseSeed(shared) ? shared : own, own });
     });
     return () => cancelAnimationFrame(raf);
   }, []);
@@ -52,20 +51,19 @@ export function MadeForYou() {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!seed || !canvas || !ctx) return;
-    const art = generate(seed, W, H);
-    const strokes = orderedStrokes(art);
-    const mine = seed === mySeed();
+    const strokes = orderedStrokes(generate(seed, W, H));
+    strokesRef.current = strokes;
     paintPaper(ctx, W, H, seed);
     delete canvas.dataset.ready;
 
-    let raf = requestAnimationFrame(() => setInfo(infoFor(seed, mine, art.family.name)));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       paintStrokes(ctx, strokes);
       canvas.dataset.ready = "";
-      return () => cancelAnimationFrame(raf);
+      return;
     }
     const start = performance.now();
     let drawn = 0;
+    let raf = 0;
     const tick = (now: number) => {
       // rAF timestamps can be a little earlier than `start`, so clamp to 0..1.
       const k = Math.min(1, Math.max(0, (now - start) / DRAW_MS));
@@ -90,12 +88,12 @@ export function MadeForYou() {
     if (!ctx) return;
     ctx.scale(scale, scale);
     paintPaper(ctx, W, H, info.seed);
-    paintStrokes(ctx, orderedStrokes(generate(info.seed, W, H)));
+    paintStrokes(ctx, strokesRef.current);
     c.toBlob((blob) => {
       if (!blob) return;
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `maksym-page-no-${info.edition}.png`;
+      a.download = `${info.family.key}-${info.edition}.png`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 5000);
     }, "image/png");
@@ -115,11 +113,11 @@ export function MadeForYou() {
 
   function backToMine() {
     window.history.replaceState(null, "", window.location.pathname);
-    setSeed(mySeed());
+    setState((s) => s && { seed: s.own, own: s.own });
   }
 
   const label = info
-    ? `A drawing generated ${info.mine ? "for you today" : "for someone else, shared with you"}: ${info.family}, number ${info.edition}`
+    ? `A drawing generated ${info.mine ? "for you today" : "for someone else, shared with you"}: ${info.family.name}, number ${info.edition}`
     : "A drawing generated for you today";
 
   return (
@@ -131,7 +129,7 @@ export function MadeForYou() {
         <p className="art-cap" data-testid="art-caption">
           {info ? (
             <>
-              No. {info.edition} · <b>{info.family}</b> ·{" "}
+              No. {info.edition} · <b>{info.family.name}</b> ·{" "}
               <span className="art-note">{info.mine ? "Made for you today" : "Shared with you"}</span>
             </>
           ) : (

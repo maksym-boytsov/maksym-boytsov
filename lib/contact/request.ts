@@ -1,16 +1,27 @@
-/** Request helpers for /api/chat: origin allowlist, client key, capped body read. */
+import { SITE_URL } from "@/lib/site";
+
+/** Shared plumbing for the contact API routes: origin allowlist, client key, body reading, responses. */
 
 type Env = Record<string, string | undefined>;
 
+export const NO_STORE = { "Cache-Control": "no-store" };
+
+/** A JSON error response, never cached. */
+export function jsonError(code: string, status: number, headers: Record<string, string> = {}): Response {
+  return Response.json({ error: code }, { status, headers: { ...NO_STORE, ...headers } });
+}
+
+/** A one-line JSON logger for a route. Callers log counts and status codes only, never what visitors wrote. */
+export const logger =
+  (scope: string) =>
+  (entry: Record<string, unknown>): void =>
+    console.info(JSON.stringify({ scope, ...entry }));
+
+/** The site itself (with and without www), plus Vercel preview and deployment URLs. */
 export function allowedOrigins(env: Env = process.env): Set<string> {
-  const origins = new Set(["https://www.maksym.page", "https://maksym.page"]);
-  // Vercel preview and deployment URLs (hostnames without a scheme).
+  const origins = new Set([SITE_URL, SITE_URL.replace("://www.", "://")]);
   for (const host of [env.VERCEL_URL, env.VERCEL_BRANCH_URL]) {
     if (host) origins.add(`https://${host}`);
-  }
-  if (env.NODE_ENV === "development") {
-    origins.add("http://localhost:3000");
-    origins.add("http://127.0.0.1:3000");
   }
   return origins;
 }
@@ -73,4 +84,15 @@ export async function readBodyCapped(req: Request, maxBytes: number): Promise<st
     offset += c.byteLength;
   }
   return new TextDecoder("utf-8", { fatal: false }).decode(bytes);
+}
+
+/** Reads a JSON body of at most `maxBytes`, or returns undefined if it's too large or not JSON. */
+export async function readJson(req: Request, maxBytes: number): Promise<unknown> {
+  const raw = await readBodyCapped(req, maxBytes);
+  if (raw === null) return undefined;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return undefined;
+  }
 }

@@ -1,25 +1,18 @@
-import { checkSendLimit } from "@/lib/chat/guard";
-import { getResend, mailFrom, mailTo } from "@/lib/chat/mail";
-import { clientKey, isAllowedOrigin, readBodyCapped } from "@/lib/chat/request";
-import { parseMessageRequest } from "@/lib/chat/schema";
+import { MAX_BODY_BYTES } from "@/lib/contact/config";
+import { checkSendLimit } from "@/lib/contact/guard";
+import { getResend, mailFrom, mailTo } from "@/lib/contact/mail";
+import type { MessageErrorCode } from "@/lib/contact/notices";
+import { NO_STORE, clientKey, isAllowedOrigin, jsonError, logger, readJson } from "@/lib/contact/request";
+import { parseMessageRequest } from "@/lib/contact/schema";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 15;
 
-const NO_STORE = { "Cache-Control": "no-store" };
-const MAX_BODY_BYTES = 4 * 1024;
-
-type MessageError = "bad_request" | "forbidden" | "rate_limited" | "unavailable" | "error";
-
-function fail(code: MessageError, status: number, headers: Record<string, string> = {}): Response {
-  return Response.json({ error: code }, { status, headers: { ...NO_STORE, ...headers } });
-}
-
+const fail = (code: MessageErrorCode, status: number, headers?: Record<string, string>) =>
+  jsonError(code, status, headers);
 /** Counts and status codes only. Never the message or the visitor's address. */
-function log(entry: Record<string, unknown>) {
-  console.info(JSON.stringify({ scope: "message", ...entry }));
-}
+const log = logger("message");
 
 /** Lets the page know whether it can offer Send, or should fall back to a mailto link. */
 export function GET(): Response {
@@ -30,15 +23,7 @@ export function GET(): Response {
 export async function POST(req: Request): Promise<Response> {
   if (!isAllowedOrigin(req.headers.get("origin"))) return fail("forbidden", 403);
 
-  const raw = await readBodyCapped(req, MAX_BODY_BYTES);
-  if (raw === null) return fail("bad_request", 400);
-  let body: unknown;
-  try {
-    body = JSON.parse(raw);
-  } catch {
-    return fail("bad_request", 400);
-  }
-  const parsed = parseMessageRequest(body);
+  const parsed = parseMessageRequest(await readJson(req, MAX_BODY_BYTES));
   if (!parsed.ok) return fail("bad_request", 400);
 
   // A filled-in spam trap: pretend it worked, send nothing.

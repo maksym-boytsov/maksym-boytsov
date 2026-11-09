@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { INTRO_SYSTEM, NO_NOTE } from "@/lib/chat/prompt";
-import { parseIntroRequest } from "@/lib/chat/schema";
+import { INTRO_SYSTEM, NO_NOTE } from "@/lib/contact/prompt";
+import { parseIntroRequest } from "@/lib/contact/schema";
 
 describe("parseIntroRequest", () => {
   it("accepts a few lines about the visitor and trims them", () => {

@@ -1,30 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MAX_ABOUT_CHARS, MIN_ABOUT_CHARS } from "@/lib/chat/config";
-import { NOTICES, isIntroErrorCode, type IntroErrorCode } from "@/lib/chat/notices";
+import { MAX_EMAIL_CHARS, MAX_MESSAGE_CHARS, MIN_MESSAGE_CHARS, MIN_WORDING_CHARS } from "@/lib/contact/config";
+import { NOTICES, SEND_NOTICES, errorCodeOf } from "@/lib/contact/notices";
 import { LINKS } from "@/lib/site";
 
-const ADDRESS = LINKS.email.replace("mailto:", "");
 const looksLikeEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
-
-const SEND_NOTICES: Record<string, string> = {
-  bad_request: "Check your email address and message.",
-  rate_limited: "You've sent a few already. Try again a little later.",
-  unavailable: `Couldn't send right now. You can email me at ${ADDRESS}.`,
-  error: `Couldn't send right now. You can email me at ${ADDRESS}.`,
-};
-
-async function errorCodeOf(res: Response): Promise<IntroErrorCode> {
-  try {
-    const body: unknown = await res.json();
-    const code = (body as { error?: unknown } | null)?.error;
-    if (isIntroErrorCode(code)) return code;
-  } catch {
-    // fall through
-  }
-  return res.status === 429 ? "rate_limited" : "error";
-}
 
 /**
  * "Want to talk?": the visitor writes a message in their own words and sends it.
@@ -33,7 +14,7 @@ async function errorCodeOf(res: Response): Promise<IntroErrorCode> {
  * it and open X or LinkedIn. The form opens from a "Write a message" button.
  * Help with the wording is optional, and Undo brings their original back.
  */
-export function IntroWriter() {
+export function MessageForm() {
   const [text, setText] = useState("");
   const [email, setEmail] = useState("");
   const [trap, setTrap] = useState("");
@@ -47,10 +28,10 @@ export function IntroWriter() {
   const [open, setOpen] = useState(false);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const message = text.trim();
-  const canPolish = message.length >= MIN_ABOUT_CHARS && !busy;
+  const canPolish = message.length >= MIN_WORDING_CHARS && !busy;
   // The email is optional; if they start typing one, it has to look real.
   const emailOk = email.trim() === "" || looksLikeEmail(email);
-  const readyToSend = message.length >= 2 && emailOk && !busy;
+  const readyToSend = message.length >= MIN_MESSAGE_CHARS && emailOk && !busy;
 
   // Offer Send only when the server can actually deliver email.
   useEffect(() => {
@@ -65,7 +46,7 @@ export function IntroWriter() {
   }, []);
 
   function edit(value: string) {
-    setText(value.slice(0, MAX_ABOUT_CHARS));
+    setText(value.slice(0, MAX_MESSAGE_CHARS));
     setCopied(null);
     setNotice(null);
   }
@@ -81,13 +62,13 @@ export function IntroWriter() {
         body: JSON.stringify({ about: message }),
       });
       if (!res.ok) {
-        setNotice(NOTICES[await errorCodeOf(res)]);
+        setNotice(NOTICES[await errorCodeOf(res, NOTICES)]);
         return;
       }
       const { note } = (await res.json()) as { note?: unknown };
       if (typeof note !== "string" || !note) throw new Error("empty");
       setOriginal(text);
-      setText(note.slice(0, MAX_ABOUT_CHARS));
+      setText(note); // the server already cuts it to the box's length
     } catch {
       setNotice(NOTICES.error);
     } finally {
@@ -106,16 +87,10 @@ export function IntroWriter() {
         body: JSON.stringify({ email: email.trim(), message, website: trap }),
       });
       if (!res.ok) {
-        let code = "error";
-        try {
-          code = ((await res.json()) as { error?: string }).error ?? "error";
-        } catch {
-          // keep "error"
-        }
-        setNotice(SEND_NOTICES[code] ?? SEND_NOTICES.error);
+        setNotice(SEND_NOTICES[await errorCodeOf(res, SEND_NOTICES)]);
         return;
       }
-      setSentTo(email.trim() || "");
+      setSentTo(email.trim());
       setText("");
       setOriginal(null);
     } catch {
@@ -206,7 +181,7 @@ export function IntroWriter() {
             id="intro-text"
             className="intro-text"
             rows={5}
-            maxLength={MAX_ABOUT_CHARS}
+            maxLength={MAX_MESSAGE_CHARS}
             value={text}
             onChange={(e) => edit(e.target.value)}
             placeholder="Hi Maksym, …"
@@ -226,70 +201,68 @@ export function IntroWriter() {
           />
 
           {/* Everything is visible once the form is open; actions wait for a message. */}
-          <div>
-              <div className="intro-row">
-                <span className="intro-count">
-                  {text.length}/{MAX_ABOUT_CHARS}
-                </span>
-                <span className="intro-links">
-                  {original !== null && !busy && (
-                    <button type="button" onClick={undo}>
-                      Undo
-                    </button>
-                  )}
-                  <button type="button" onClick={() => void polish()} disabled={!canPolish}>
-                    {busy === "wording" ? "Wording it…" : "Help me word it"}
-                  </button>
-                </span>
-              </div>
-
-              {canSend && (
-                <div className="intro-email">
-                  <label htmlFor="intro-email" className="intro-label">
-                    Your email (optional, if you&apos;d like a reply)
-                  </label>
-                  <input
-                    id="intro-email"
-                    className="intro-text intro-input"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    maxLength={254}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                  />
-                </div>
+          <div className="intro-row">
+            <span className="intro-count">
+              {text.length}/{MAX_MESSAGE_CHARS}
+            </span>
+            <span className="intro-links">
+              {original !== null && !busy && (
+                <button type="button" onClick={undo}>
+                  Undo
+                </button>
               )}
+              <button type="button" onClick={() => void polish()} disabled={!canPolish}>
+                {busy === "wording" ? "Wording it…" : "Help me word it"}
+              </button>
+            </span>
+          </div>
 
-              <div className="intro-actions">
-                {canSend ? (
-                  <button type="submit" className="intro-primary" disabled={!readyToSend}>
-                    {busy === "sending" ? "Sending…" : "Send"}
-                  </button>
-                ) : message.length === 0 ? (
-                  <button type="button" className="intro-primary" disabled>
-                    Send by email
-                  </button>
-                ) : (
-                  <a
-                    className="intro-primary"
-                    href={`${LINKS.email}?subject=${encodeURIComponent("Hi from maksym.page")}&body=${encodeURIComponent(message)}`}
-                  >
-                    Send by email
-                  </a>
-                )}
-                <button type="button" onClick={() => copyAndOpen("X", LINKS.x)} disabled={message.length === 0}>
-                  Copy for X <span aria-hidden="true">↗</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => copyAndOpen("LinkedIn", LINKS.linkedin)}
-                  disabled={message.length === 0}
-                >
-                  Copy for LinkedIn <span aria-hidden="true">↗</span>
-                </button>
-              </div>
+          {canSend && (
+            <div className="intro-email">
+              <label htmlFor="intro-email" className="intro-label">
+                Your email (optional, if you&apos;d like a reply)
+              </label>
+              <input
+                id="intro-email"
+                className="intro-text intro-input"
+                type="email"
+                autoComplete="email"
+                inputMode="email"
+                maxLength={MAX_EMAIL_CHARS}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+              />
+            </div>
+          )}
+
+          <div className="intro-actions">
+            {canSend ? (
+              <button type="submit" className="intro-primary" disabled={!readyToSend}>
+                {busy === "sending" ? "Sending…" : "Send"}
+              </button>
+            ) : message.length === 0 ? (
+              <button type="button" className="intro-primary" disabled>
+                Send by email
+              </button>
+            ) : (
+              <a
+                className="intro-primary"
+                href={`${LINKS.email}?subject=${encodeURIComponent("Hi from maksym.page")}&body=${encodeURIComponent(message)}`}
+              >
+                Send by email
+              </a>
+            )}
+            <button type="button" onClick={() => copyAndOpen("X", LINKS.x)} disabled={message.length === 0}>
+              Copy for X <span aria-hidden="true">↗</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => copyAndOpen("LinkedIn", LINKS.linkedin)}
+              disabled={message.length === 0}
+            >
+              Copy for LinkedIn <span aria-hidden="true">↗</span>
+            </button>
           </div>
 
           <p className="intro-status" role="status">

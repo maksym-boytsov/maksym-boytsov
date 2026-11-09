@@ -7,7 +7,7 @@ import {
   recordSpend,
   resetGuard,
   spentTodayMicroUsd,
-} from "@/lib/chat/guard";
+} from "@/lib/contact/guard";
 
 beforeEach(() => resetGuard());
 

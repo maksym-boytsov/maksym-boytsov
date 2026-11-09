@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { UNKNOWN_MODEL_PRICE, priceFor, usageCostMicroUsd } from "@/lib/chat/pricing";
+import { UNKNOWN_MODEL_PRICE, priceFor, usageCostMicroUsd } from "@/lib/contact/pricing";
 
 describe("pricing", () => {
   it("prices Opus 5.5 at $4 / $20 per million tokens", () => {

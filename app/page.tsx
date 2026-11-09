@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IntroWriter } from "@/components/chat/intro-writer";
+import { MessageForm } from "@/components/contact/message-form";
 import { MadeForYou } from "@/components/art/made-for-you";
 import { SocialLinks } from "@/components/site/social-links";
 import { CREDIT, LINKS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
@@ -73,7 +73,7 @@ export default function Home() {
         {/* Full-width ink band: the note writer reads as its own room, not part of the footer. */}
         <section className="ask-room" aria-labelledby="chat-title">
           <div className="p-wrap">
-            <IntroWriter />
+            <MessageForm />
           </div>
         </section>
       </main>

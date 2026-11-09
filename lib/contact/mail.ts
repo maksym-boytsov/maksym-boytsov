@@ -1,5 +1,6 @@
 import "server-only";
 import { Resend } from "resend";
+import { EMAIL } from "@/lib/site";
 
 /**
  * Email delivery through Resend. Messages from the site go to Maksym's inbox,
@@ -19,4 +20,4 @@ export function getResend(): Resend | null {
 export const mailFrom = () => process.env.RESEND_FROM || "maksym.page <hello@maksym.page>";
 
 /** Where messages land. */
-export const mailTo = () => process.env.MESSAGE_TO || "maksym.boytsov@gmail.com";
+export const mailTo = () => process.env.MESSAGE_TO || EMAIL;

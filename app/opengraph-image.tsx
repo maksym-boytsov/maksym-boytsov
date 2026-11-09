@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { COLORS } from "@/lib/site";
 
 export const alt = "Maksym Boytsov, Head of Engineering at ChainPatrol. A drawing made for every visitor, new each day.";
 export const size = { width: 1200, height: 630 };
@@ -24,13 +25,13 @@ export default async function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "60px 72px",
-          background: "#f1eee7",
-          color: "#121212",
+          background: COLORS.paper,
+          color: COLORS.ink,
           fontFamily: "Inter Tight",
         }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 24, fontWeight: 500, letterSpacing: 3, color: "#6d685e", textTransform: "uppercase" }}>
+          <div style={{ fontSize: 24, fontWeight: 500, letterSpacing: 3, color: COLORS.muted, textTransform: "uppercase" }}>
             Head of Engineering · ChainPatrol
           </div>
           <div style={{ display: "flex", flexDirection: "column", marginTop: 22, fontSize: 150, fontWeight: 300, lineHeight: 0.86, letterSpacing: -8 }}>
@@ -38,9 +39,9 @@ export default async function Image() {
             <span>Boytsov</span>
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderTop: "2px solid #121212", paddingTop: 22, fontSize: 30, fontWeight: 500, letterSpacing: -0.5 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderTop: `2px solid ${COLORS.ink}`, paddingTop: 22, fontSize: 30, fontWeight: 500, letterSpacing: -0.5 }}>
           <span>A drawing made for you, new every day.</span>
-          <span style={{ color: "#1f5135" }}>maksym.page</span>
+          <span style={{ color: COLORS.forest }}>maksym.page</span>
         </div>
       </div>
     ),
